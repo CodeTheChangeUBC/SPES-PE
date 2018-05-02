@@ -1,31 +1,80 @@
   body{
     background-color: #f1f1f1;
   }
+
+  .container{
+    margin-top: 5rem;
+
+  }
   .well {
     margin-top: 4%;
     background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.06), 0 6px 20px 0 rgba(0, 0, 0, 0.06);
   }
 
   .title-h2{
     font-family: 'Pacifico', cursive;
     font-size: 40px;
     font-weight: 100;
-    color: #525050;
+    color: #145550;
 
   }
 
+  .title-h2a{
+    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+    font-weight: 100;
+    color: white;
+    text-align: center;
+
+  }
+
+    .title-h2b{
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+    color: white;
+    text-align: center;
+
+  }
 
   .form-legend {
     padding-bottom: 2em;
   }
 
   .form-control:focus {
-    border-color: #1ad610;
+    border-color: #26a69a;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(26, 214, 16, 0.1);
   }
+
+.ui.input input:focus, .ui.input.focus input {
+    border-color: #26a69a;
+    background: #FFF;
+    color: rgba(0,0,0,.8);
+    box-shadow: none;
+}
 
 
 .labelTitle{
   font-size: 14px;
 }
 
+.dgreen{
+  background-color: #26a69a;
+}
+
+.dgreen:hover{
+  background-color: #23615b;
+}
+
+.dgreen:active{
+  background-color: #23615b;
+}
+
+.dgreen:focus{
+  background-color: #23615b;
+}
+
+.dgreen:{
+  background-color: #23615b;
+}

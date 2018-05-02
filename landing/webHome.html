@@ -2,115 +2,268 @@
 <html>
 <head>
 
-  <!-- Mete data-->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" href="favicon.ico">
+	<!-- Mete data-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="favicon.ico">
 
 
-  
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<!-- Style Sheets-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="floating-labels.css" rel="stylesheet">
+	<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="loadingDiv.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel = "stylesheet"
+	href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
 
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 
-  <!-- Style Sheets-->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link href="floating-labels.css" rel="stylesheet">
-  <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel = "stylesheet"
-  href = "https://fonts.googleapis.com/icon?family=Material+Icons">
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-  <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="materialize/css/materialize.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>SPES-PE</title>
 
-  <title>SPES-PE</title>
+	<style type="text/css">
+	.overlay {
+		height: 0%;
+		width: 100%;
+		position: fixed;
+		z-index: 3;
+		top: 0;
+		left: 0;
+		background-color: rgb(0,0,0);
+		background-color: #26a69ab5;
+		overflow-y: hidden;
+		transition: 0.5s;
+	}
 
+	.overlay-content {
+		position: relative;
+		top: 25%;
+		width: 100%;
+		margin-top: 30px;
+	}
+
+	.overlay a {
+		padding: 8px;
+		text-decoration: none;
+		font-size: 36px;
+		color: white;
+		display: block;
+		transition: 0.3s;
+	}
+
+	.overlay a:hover, .overlay a:focus {
+		color: gainsboro;
+	}
+
+	.overlay .closebtn {
+		position: absolute;
+		top: 20px;
+		right: 45px;
+		font-size: 60px;
+	}
+
+	@media screen and (max-height: 450px) {
+		.overlay {overflow-y: auto;}
+		.overlay a {font-size: 20px}
+		.overlay .closebtn {
+			font-size: 40px;
+			top: 15px;
+			right: 35px;
+		}
+	}
+
+	.overlay li{
+	font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+    color: white;
+    text-align: center;
+	}
+</style>
 </head>
 <body>
 
- <div class="container">
-  <div class="row">
-    <div class="col-sm-8 col-sm-offset-2 well">
+	<div id="myNav" class="overlay">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div class="overlay-content">
+			<div class="row" style="padding-bottom: 12px;">
+				<div class="col-md-4">
+					<h2 class="title-h2a">Succesful Websites</h2>
+					<ul>
+						<li>1</li>
+						<li>2</li>
+					</ul>
+					<h2 class="title-h2b">*These websites were sussecfully completed.</h2>
+				</div>
 
-      <div class="col-sm-12 form-legend">
-        <h2 class="title-h2">Event Details</h2>
-      </div>
+				<div class="col-md-4">
+					<h2 class="title-h2a">Captcha Websites</h2>
+					<ul>
+						<li>1</li>
+						<li>2</li>
+					</ul>
+					<h2 class="title-h2b">*Please check the opened browser tabs.</h2>
+				</div>
 
-      <div class="col-sm-12 form-column">
-        <form id="dataForm">
+				<div class="col-md-4">
+					<h2 class="title-h2a">Unsuccesful Websites</h2>
+					<ul>
+						<li>1</li>
+						<li>2</li>
+					</ul>
+					<h2 class="title-h2b">*Press on the names to redirect you to the websites.</h2>
+				</div>
+			</div>
+			
 
-          <div class="form-group">
-            <label for="title" class="labelTitle">Event Title</label>
-            <input type="text" id="title" name="title" class="form-control" placeholder="title" required>
-          </div><br>
+		</div>
+	</div>
 
-          <div class="form-group">
-            <label for="calender" class="labelTitle">Event Date/Title</label><br>
-            <div class="ui calendar" id="calender1">
-              <div class="ui input left icon">
-                <i class="calendar icon"></i>
-                <input type="text" id="calendar" name="calendar" placeholder="Date/Time" style="height: 1rem;" required> 
-              </div>
-            </div>
-          </div><br><br><br>  
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2 well">
 
-          <div class="form-group">
-            <label for="details" class="labelTitle">Event Details</label>
-            <textarea rows="9" class="form-control"  id="details" name="details" placeholder="Enter your event details here" required></textarea>
-          </div><br>
-          
-          <div class="form-group">
-            <label for="details" class="labelTitle">Event Tags</label>
-            <div class="chips chips-placeholder" style="margin-top: 0;"></div>
-          </div>  
+				<div class="col-sm-12 form-legend">
+					<h2 class="title-h2">Event Details</h2>
+				</div>
 
+				<div class="col-sm-12 form-column">
+					<form id="dataForm">
 
-          <br><input type="button" value="Submit"  id="formSubmit" class="btn btn-success btn-block" style="font-family: sans-serif;">
-
-        </form>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+						<div class="form-group">
+							<label for="title" class="labelTitle">Event Title</label>
+							<input type="text"  id="title" class="form-control" placeholder="Enter your event's title" required>
+						</div>
 
 
 
-  <script type="text/javascript">
-      var finalObj ;
+						<div class="form-group">
+							<label for="details" class="labelTitle">Event Details</label>
+							<textarea rows="9" class="form-control"  id="details" name="details" placeholder="Enter your event details here" required></textarea>
+						</div>
+
+
+
+						<div class="form-group">
+							<label for="details" class="labelTitle">Event Tags</label>
+							<div class="chips chips-placeholder" style="margin-top: 0;"></div>
+						</div>  <br>
+
+
+						<div class="form-group">
+							<label for="calender" class="labelTitle">Event Date/Title</label><br>
+							<div class="ui calendar" id="calender1">
+								<div class="ui input left icon">
+									<i class="calendar icon"></i>
+									<input type="text"  class="form-control" id="calendar" name="calendar"  placeholder="Date/Time"  required> 
+								</div>
+							</div>
+						</div><br><br>
+
+						<label for="selector" class="labelTitle">Websites</label><br>
+						<select  id="selector" name="websites" class="selectpicker" data-live-search="true" multiple multiple data-actions-box="true">
+							<option>Mustard</option>
+							<option>Ketchup</option>
+							<option>Relish</option>
+							<option>Mustard</option>
+							<option>Ketchup</option>
+							<option>Relish</option>
+							<option>Mustard</option>
+							<option>Ketchup</option>
+							<option>Relish</option>
+						</select>
+
+
+						<br><br><br><input type="button" value="Submit"  onclick="displayResults();" id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
+
+
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="loaddiv" class=""><div class="loading-wheel"></div></div>
+
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+
+
+		<script type="text/javascript">
+			var finalObj ;
     //For the date/time section
     $('#calender1').calendar();
 
     //Json format of form
     $(function() {
-      $("#formSubmit").click(function() {
-        var form = $("#dataForm").serializeArray();
+    	$("#formSubmit").click(function() {
+    		var form = $("#dataForm").serializeArray();
 
-        var tag= $('.chips-placeholder').material_chip('data');
-        var tagArr = [];
-        for (var i = 0; i < tag.length; i++) {
-          tagArr.push(tag[i].tag);
-        }
-        tagArr = {name: "tags" , value : tagArr};
-        form.push(tagArr);
-        console.log(form);
+    		var tag= $('.chips-placeholder').material_chip('data');
+    		var tagArr = [];
+    		for (var i = 0; i < tag.length; i++) {
+    			tagArr.push(tag[i].tag);
+    		}
+    		tagArr = {name: "tags" , value : tagArr};
+    		form.push(tagArr);
+    		console.log(form);
 
-      });
+    	});
 
     });
 
     //Tags script
     $('.chips-placeholder').material_chip({
-      placeholder: 'Enter a tag',
-      secondaryPlaceholder: '+Tag',
+    	placeholder: 'Enter a tag',
+    	secondaryPlaceholder: '+Tag',
     });
 
-  </script>
+</script>
+
+<script type="text/javascript">
+
+	function loadScreen(){
+		document.getElementById("loaddiv").className = "loading style-2";
+	}
+
+	function unloadScreen(){
+		document.getElementById("loaddiv").className = "";
+	}
+
+	function displayResults(){
+		loadScreen();
+		setTimeout(function(){ document.getElementById("loaddiv").className = "";}, 1000);
+		setTimeout(function(){ openNav();}, 1000);
+	}
+
+</script>
+
+<script type="text/javascript">
+	/* Open */
+	/* Open */
+	function openNav() {
+		document.getElementById("myNav").style.height = "100%";
+	}
+
+	/* Close */
+	function closeNav() {
+		document.getElementById("myNav").style.height = "0%";
+	}
+</script>
 
 </body>
 </html>
