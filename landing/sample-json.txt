@@ -1,0 +1,1 @@
+{"event_title":"Test","event_details":"Test details  fafawjii a\r\nfai awhfiah a\r\nwfaifahfiawhfiahfiahwfiahwfifh ai ma fnaiwfh aifh","event_date":"May 11, 2018 11:40 AM","event_websites":["Vancity","Craigslist","Kids Vancouver","Youth Core","Yelp","Global News"],"event_tags":["1","2","3","4afa","fa","r","a","24","faifa","fkafk","lk"]}
