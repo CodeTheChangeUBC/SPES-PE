@@ -10,7 +10,6 @@
 
 	<!-- Style Sheets-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link href="floating-labels.css" rel="stylesheet">
 	<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="loadingDiv.css">
@@ -28,9 +27,11 @@
 	<script src="https://rawgit.com/marioizquierdo/jquery.serializeJSON/master/jquery.serializejson.js"></script>
 
 	<title>SPES-PE</title>
-
 </head>
+
 <body>
+
+
 	<!-- == Results Display == -->
 	<div id="myNav" class="overlay">
 
@@ -76,74 +77,195 @@
 			<div class="col-sm-8 col-sm-offset-2 well">
 
 				<div class="col-sm-12 form-legend">
-					<h2 class="title-h2">Event Details</h2>
+					<h2 class="title-h2">Event Form</h2>
 				</div>
-
 				<div class="col-sm-12 form-column">
 					<form id="dataForm">
 
-						<div class="form-group">
-							<label for="title" class="labelTitle">Event Title</label>
-							<input type="text"  name="event_title" id="title" class="form-control" placeholder="Enter your event's title" required>
-						</div>
 
 
+						<!-- Organizer Details -->
+						<hr style="margin-top: 0">
+						<section>
 
-						<div class="form-group">
-							<label for="details" class="labelTitle">Event Details</label>
-							<textarea rows="9" class="form-control"  id="details" name="event_details" placeholder="Enter your event details here" required></textarea>
-						</div>
-
-
-
-						<div class="form-group">
-							<label for="details" class="labelTitle">Event Tags</label>
-							<div class="chips chips-placeholder" style="margin-top: 0;"></div>
-						</div><br>
-
-
-						<div class="form-group">
-							<label for="calender" class="labelTitle">Event Date/Title</label><br>
-							<div class="ui calendar" id="calender1">
-								<div class="ui input left icon">
-									<i class="calendar icon"></i>
-									<input type="text"  class="form-control" id="calendar" name="event_date"  placeholder="Date/Time"  required>
-								</div>
+							<div class="form-group">
+								<label for="Organizer-n" class="labelTitle">Organizer's Name</label>
+								<input type="text"  name="event_organizer_name" id="Organizer-n" class="form-control" placeholder="Enter the Organizer's name" required>
 							</div>
-						</div><br><br>
-
-						<label for="selector" class="labelTitle">Websites</label><br>
-						<select  id="selector" name="event_websites[]" class="selectpicker" data-width="auto" data-live-search="true" multiple multiple data-actions-box="true">
-
-							<option value="Village Vancouver">Village Vancouver</option>
-							<option value="Vancity">Vancity</option>
-							<option value="Craigslist">Craigslist</option>
-							<option value="Kids Vancouver">Kids Vancouver</option>
-
-							<option data-divider="true"></option>
-
-							<option value="City of North Van Community">City of North Van Community</option>
-							<option value="Eventful">Eventful</option>
-							<option value="Planet Friendly">Planet Friendly</option>
-							<option value="Vancouver Community Network">Vancouver Community Network</option>
-
-							<option data-divider="true"></option>
-
-							<option value="Youth Core">Youth Core</option>
-							<option value="Kijiji">Kijiji</option>
-							<option value="Yelp">Yelp</option>
-							<option value="Global News">Global News</option>
-
-							<option data-divider="true"></option>
-
-							<option value="North Shore">North Shore</option>
-							<option value="Vancouver Weekly">Vancouver Weekly</option>
-							<option value="Ubyssey">Ubyssey</option>
-							<option value="Metro Vancouver">Metro Vancouver</option>
-						</select>
 
 
-						<br><br><br><input type="button" value="Submit"  onclick="displayResults();" id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
+							<div class="form-group">
+								<label for="Organizer-e" class="labelTitle">Organizer's Email</label>
+								<input type="email"  name="event_organizer_email" id="Organizer-e" class="form-control" placeholder="Enter the Organizer's email" required>
+							</div>
+
+							<div class="form-group">
+								<label for="Organizer-p" class="labelTitle">Organizer's Phone Number</label>
+								<input type="tel"  name="event_organizer_phone_number" id="Organizer-p" class="form-control" placeholder="Enter the Organizer's phone number" required>
+							</div>
+
+						</section>
+						<hr>
+
+
+
+
+
+						<!-- Event Details -->
+						<section>
+
+							<div class="form-group">
+								<label for="title" class="labelTitle">Event Title</label>
+								<input type="text"  name="event_title" id="title" class="form-control" placeholder="Enter your event's title" required>
+							</div>
+
+
+							<div>
+
+								<div  class="form-group">
+									<label for="calender_s" class="labelTitle">Event Start Date/Time</label><br>
+									<div class="ui calendar" id="calender1">
+
+										<div class="ui input left icon">
+											<i class="calendar icon"></i>
+											<input type="text"  class="form-control" id="calendar_s" name="event_date_start"  placeholder="Date/Time"  required>
+										</div>
+									</div>
+								</div><br><br>
+
+
+								<div class="form-group">
+									<label for="calender_e" class="labelTitle">Event End Date/Time</label><br>
+									<div class="ui calendar" id="calender2">
+										<div class="ui input left icon">
+											<i class="calendar icon"></i>
+											<input type="text"  class="form-control" id="calendar_e" name="event_date_end"  placeholder="Date/Time"  required>
+										</div>
+									</div>
+								</div><br><br>
+
+
+							</div>
+
+
+							<div class="form-group">
+								<label for="age-g" class="labelTitle">Age Group</label>
+								<input type="text"  name="event_age_group" id="age-g" class="form-control" placeholder="Enter your event's age group" required>
+							</div>
+
+
+							<div class="form-group">
+								<label for="price" class="labelTitle">Price</label>
+								<input type="text"  name="event_price" id="price" class="form-control" placeholder="Enter your event's price" required>
+							</div>
+
+
+
+							<div class="form-group">
+								<label for="details" class="labelTitle">Event Details</label>
+								<textarea rows="9" class="form-control"  id="details" name="event_details" placeholder="Enter your event details here" required></textarea>
+							</div>
+
+
+						</section>
+						<hr>
+
+
+
+
+
+						<!-- Event Location -->
+						<section>
+							
+							<div>
+
+								<div class="form-group">
+									<label for="ven" class="labelTitle">Venue</label>
+									<input type="text"  name="event_venue" id="ven" class="form-control" placeholder="Enter your event's Venue" required>
+								</div>
+
+
+								<div class="form-group">
+									<label for="street" class="labelTitle">Street</label>
+									<input type="text"  name="event_street" id="street" class="form-control" placeholder="Street address" required>
+								</div>
+
+								<div class="form-group">
+									<label for="city" class="labelTitle">City</label>
+									<input type="text"  name="event_city" id="pcity" class="form-control" placeholder="City" required>
+								</div>
+
+								<div class="form-group">
+									<label for="pcode" class="labelTitle">Postal Code</label>
+									<input type="text"  name="event_postal_code" id="pcode" class="form-control" placeholder="Postal code" required>
+								</div>
+
+
+							</div>
+
+
+
+						</section>
+						<hr>
+
+
+
+
+
+						<!-- Script Settings  -->
+						<section>
+							
+							<div >
+								<label for="selector" class="labelTitle">Websites</label><br>
+								<select  id="selector" name="event_websites[]" class="selectpicker" data-width="auto" data-live-search="true" multiple multiple data-actions-box="true" required>
+
+									<option value="Village Vancouver">Village Vancouver</option>
+									<option value="Vancity">Vancity</option>
+									<option value="Craigslist">Craigslist</option>
+									<option value="Kids Vancouver">Kids Vancouver</option>
+
+									<option data-divider="true"></option>
+
+									<option value="City of North Van Community">City of North Van Community</option>
+									<option value="Eventful">Eventful</option>
+									<option value="Planet Friendly">Planet Friendly</option>
+									<option value="Vancouver Community Network">Vancouver Community Network</option>
+
+									<option data-divider="true"></option>
+
+									<option value="Youth Core">Youth Core</option>
+									<option value="Kijiji">Kijiji</option>
+									<option value="Yelp">Yelp</option>
+									<option value="Global News">Global News</option>
+
+									<option data-divider="true"></option>
+
+									<option value="North Shore">North Shore</option>
+									<option value="Vancouver Weekly">Vancouver Weekly</option>
+									<option value="Ubyssey">Ubyssey</option>
+									<option value="Metro Vancouver">Metro Vancouver</option>
+								</select>
+
+							</div><br>
+
+
+
+							<div>
+								<div class="form-group">
+									<label for="ch" class="labelTitle">Event Tags (*Optional) </label>
+									<div id="ch" class="chips chips-placeholder" style="margin-top: 0;"></div>
+								</div>	
+							</div>
+
+
+						</section>
+
+
+
+
+
+
+						<br><br><input type="button" value="Submit"  onclick="submitForm();" id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
 
 
 
@@ -154,7 +276,7 @@
 		</div>
 		<!-- ====================== -->
 
-
+		<h5 class="cr"> ©CTC - 2018</h5>
 		<!-- == Loading screen == -->
 		<div id="loaddiv" class=""><div class="loading-wheel"></div></div>
 		<!-- ====================== -->
@@ -164,8 +286,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<script type="text/javascript">
 
-    //For the date/time section
-    $('#calender1').calendar();
+		//For the date/time section
+		$('#calender1').calendar();
+		$('#calender2').calendar();
 
 		//Tags script
 		$('.chips-placeholder').material_chip({
@@ -173,53 +296,60 @@
 			secondaryPlaceholder: '+Tag',
 		});
 
-    //Json format of form
-    $(function() {
-    	$("#formSubmit").click(function() {
-    		var form = $("#dataForm").serializeJSON();
-    		var tag= $('.chips-placeholder').material_chip('data');
-    		var tagArr = [];
-    		for (var i = 0; i < tag.length; i++) {
-    			tagArr.push(tag[i].tag);
-    		}
-    		form["event_tags"] = tagArr ;
+		//Json format of form
+		$(function() {
+			$("#formSubmit").click(function() {
+				var form = $("#dataForm").serializeJSON();
+				var tag= $('.chips-placeholder').material_chip('data');
+				var tagArr = [];
+				for (var i = 0; i < tag.length; i++) {
+					tagArr.push(tag[i].tag);
+				}
+				form["event_tags"] = tagArr ;
 				//Contains the form data
 				var dataString = JSON.stringify(form);
-    		console.log(dataString);
-    	});
+				console.log(dataString);
+			});
 
-    });
+		});
 
 
-</script>
+	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
-	function loadScreen(){
-		document.getElementById("loaddiv").className = "loading style-2";
-	}
+		function loadScreen(){
+			document.getElementById("loaddiv").className = "loading style-2";
+		}
 
-	function unloadScreen(){
-		document.getElementById("loaddiv").className = "";
-	}
+		function unloadScreen(){
+			document.getElementById("loaddiv").className = "";
+		}
 
-	function displayResults(){
-		loadScreen();
-		setTimeout(function(){ document.getElementById("loaddiv").className = "";}, 1000);
-		setTimeout(function(){ openNav();}, 1000);
-	}
+		function displayResults(){
+			loadScreen();
+			setTimeout(function(){ document.getElementById("loaddiv").className = "";}, 1000);
+			setTimeout(function(){ openNav();}, 1000);
+		}
 
-</script>
+		function submitForm(){
+			if ($("#dataForm")[0].checkValidity()){
+				//ajax post request(loadScreen() then ajax request then in its callback call displayreults)
+			}
+			else
+				$("#dataForm")[0].reportValidity();
+		}
+	</script>
 
-<script type="text/javascript">
-	function openNav() {
-		document.getElementById("myNav").style.height = "100%";
-	}
-	function closeNav() {
-		document.getElementById("myNav").style.height = "0%";
-	}
+	<script type="text/javascript">
+		function openNav() {
+			document.getElementById("myNav").style.height = "100%";
+		}
+		function closeNav() {
+			document.getElementById("myNav").style.height = "0%";
+		}
 
-</script>
+	</script>
 
 </body>
 </html>
