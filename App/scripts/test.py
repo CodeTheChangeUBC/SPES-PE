@@ -1,2 +1,0 @@
-# Test Script
-print("test");
