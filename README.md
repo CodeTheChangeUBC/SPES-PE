@@ -1,2 +1,2 @@
 # SPES-PE
-Automatic Event Uploader for Stanley Park Ecology Society 
+Compete Front-End design for SPES-PE auot-Event Uploader
