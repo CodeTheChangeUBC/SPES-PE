@@ -34,6 +34,15 @@ hr{
     text-align: center;
   }
 
+  .sub-t{
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    font-weight: 100;
+    color: grey;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
   .title-h2a{
     font-family: 'Pacifico', cursive;
     font-size: 40px;
@@ -175,3 +184,30 @@ hr{
     color: white;
     text-align: center;
   }
+
+.autocomplete-items {
+  position: relative;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
