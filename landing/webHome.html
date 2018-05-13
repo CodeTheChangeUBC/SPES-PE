@@ -98,8 +98,14 @@
 
 							<div class="form-group">
 								<label for="Organizer-e" class="labelTitle">Organizer's Email</label>
-								<input type="email"  name="event_organizer_email" id="Organizer-e" class="form-control" placeholder="Enter the Organizer's email" required>
+								<input type="email" list="e-sugg"  name="event_organizer_email" id="Organizer-e" class="form-control" placeholder="Enter the Organizer's email" required>
 							</div>
+
+							<datalist id="e-sugg">
+								<option>education@stanleyparkecology.ca</option>
+								<option>programs@stanleyparkecology.ca</option>
+								<option>outreach@stanleyparkecology.ca</option>
+							</datalist>
 
 							<div class="form-group">
 								<label for="phone" class="labelTitle">Organizer's Phone Number</label>
@@ -150,6 +156,7 @@
 							</div>
 
 
+
 							<div class="form-group">
 								<label for="age-g" class="labelTitle">Age Group</label>
 								<input type="text"  name="event_age_group" id="age-g" class="form-control" placeholder="Enter your event's age group" required>
@@ -162,11 +169,17 @@
 							</div>
 
 
+							<div class="form-group">
+								<label for="turl" class="labelTitle">Ticket URL</label>
+								<input type="text"  name="event_ticket_url" id="turl" class="form-control" placeholder="Enter your event's ticket buying url" required>
+							</div>
+
+
 
 							<div class="form-group">
 								<label for="details" class="labelTitle">Event Details </label>
-								<textarea rows="14" class="form-control"  id="details" name="event_details" placeholder="Enter your event details here" onkeyup="limitWords(this.id)" required></textarea>
-								<p class="sub-t">500 Words limit</p>
+								<textarea rows="14" class="form-control"  id="details" name="event_details"   onkeyup="limitWords(this.id)" placeholder="Enter your event details here" required></textarea>
+								<p class="sub-t" style="margin-top: 4px;">50 Words limit</p>
 							</div>
 
 
@@ -184,21 +197,28 @@
 
 								<div class="form-group">
 									<label for="ven" class="labelTitle">Venue</label>
-									<input type="text"  name="event_venue" id="ven" class="form-control" placeholder="Enter your event's Venue" required>
+									<input type="text"  name="event_venue"  id="ven" class="form-control" placeholder="Enter your event's Venue" required>
 								</div>
 
+								<div class="form-group">
+									<label for="street" class="labelTitle">Address line 1</label>
+									<input type="text"  name="event_street" list="sugg" id="add1" class="form-control" placeholder="Enter address line 1" required>
+								</div>
+
+
+
+								<datalist id="sugg">
+									<option>Stanley Park Dining Pavilion</option>
+									<option>Stanley Park Nature House on Lost Lagoon</option>
+									<option> #19 Stanley Park Bus Loop</option>
+								</datalist>
 
 								<div class="form-group">
 									<label for="street" class="labelTitle">Street</label>
-									<input type="text"  name="event_street" list="sugg" id="street" class="form-control" placeholder="Street address" required>
+									<input type="text"  name="event_street"  id="street" class="form-control" placeholder="Street address" required>
 								</div>
 
-								<datalist id="sugg">
-									<option>Address 1</option>
-									<option>Address 2</option>
-									<option>Address 3</option>
-									<option>Address 4</option>
-								</datalist>
+
 
 								<div class="form-group">
 									<label for="city" class="labelTitle">City</label>
@@ -322,6 +342,7 @@
 				//Contains the form data
 				var dataString = JSON.stringify(form);
 				console.log(dataString);
+				submitForm(dataString);
 			});
 
 		});
@@ -339,15 +360,26 @@
 			document.getElementById("loaddiv").className = "";
 		}
 
-		function displayResults(){
+		function displayResults(data){
 			loadScreen();
 			setTimeout(function(){ document.getElementById("loaddiv").className = "";}, 1000);
 			setTimeout(function(){ openNav();}, 1000);
 		}
 
-		function submitForm(){
+		function submitForm(formData){
 			if ($("#dataForm")[0].checkValidity()){
-				//ajax post request(loadScreen() then ajax request then in its callback call displayreults)
+				loadScreen();
+				$.ajax({
+					type: 'POST',
+					data: JSON.stringify(formData),
+					url: 'http://localhost:8000/form',                      
+					success: function(data) {
+						unloadScreen();
+						displayResults(data);
+						console.log('success');
+						console.log(JSON.stringify(data));
+					}
+				});  
 			}
 			else
 				$("#dataForm")[0].reportValidity();
@@ -366,23 +398,39 @@
 
 	<script type="text/javascript">
 		$('#phone').mask('(000) 000-0000');
-		$('#pcode').mask('AAA-AAA');
+		$('#pcode').mask('AA AAA-AAA');
+
 		function limitWords(id) {
-			var maxWords=500;
+			var maxWords=3;
 			var d=document.getElementById(id);
 			if ( d.value.split(' ').length > maxWords ) {
-				t=d.value.substring(0,d.value.lastIndexOf(' '));
-				d.value=t.substring(0,t.lastIndexOf(' ')+1);
+				$('#details').css('background-color','#ffd6d6');
+				setInterval(function(){ $('#details').css('background-color','#fff');}, 1000);
+				t=d.value.split(' ').slice(0,maxWords).join(' ');
+				d.value=t;
 			}
 		}
-
 	</script>
 	<script type="text/javascript">
-		$("#street").keyup(function(){
-			if(this.value == "Cat"){
+		$("#add1").keyup(function(){
+			if(this.value == "Stanley Park Dining Pavilion"){
+				$("#street").val("2nd floor 610 Pipeline Rd");
 				$("#city").val("Vancouver");
-				$("#pcode").val("VZT 124");
+				$("#pcode").val("BC V6G 1Z4");
 			}
+
+			if(this.value == "Stanley Park Nature House on Lost Lagoon"){
+				$("#street").val("712 Lost Lagoon Path");
+				$("#city").val("Vancouver");
+				$("#pcode").val("BC V6G 2S1");
+			}
+
+			if(this.value == "#19 Stanley Park Bus Loop"){
+				$("#street").val("610 Pipeline Rd");
+				$("#city").val("Vancouver");
+				$("#pcode").val("BC V6G 1Z4");
+			}
+
 		});
 	</script>
 
