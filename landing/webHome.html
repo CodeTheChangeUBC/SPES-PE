@@ -42,27 +42,21 @@
 			<div class="row" style="padding-bottom: 12px;">
 				<div class="col-md-4">
 					<h2 class="title-h2a">Succesful Websites</h2>
-					<ul>
-						<li>1</li>
-						<li>2</li>
+					<ul id="successful-web">
 					</ul>
 					<h2 class="title-h2b">*These websites were sussecfully completed.</h2>
 				</div>
 
 				<div class="col-md-4">
 					<h2 class="title-h2a">Captcha Websites</h2>
-					<ul>
-						<li>1</li>
-						<li>2</li>
+					<ul id="captcha-web">
 					</ul>
 					<h2 class="title-h2b">*Please check the opened browser tabs.</h2>
 				</div>
 
 				<div class="col-md-4">
 					<h2 class="title-h2a">Unsuccesful Websites</h2>
-					<ul>
-						<li>1</li>
-						<li>2</li>
+					<ul id="unsuccessful-web">
 					</ul>
 					<h2 class="title-h2b">*Press on the names to redirect you to the websites.</h2>
 				</div>
@@ -361,18 +355,38 @@
 		}
 
 		function displayResults(data){
-			loadScreen();
-			setTimeout(function(){ document.getElementById("loaddiv").className = "";}, 1000);
-			setTimeout(function(){ openNav();}, 1000);
+			openNav();
+			//var jss = '{"successful": ["Test", "Eventful", "Metro Vancouver"], "captcha": ["Vancity"], "unsuccessful": ["Eventful", "Metro Vancouver"]}';
+			var jo = JSON.parse(data);
+
+			for(var i =0 ; i < jo.successful.length ; i++ ){
+				$("#successful-web").prepend('<li class="li-items">'+jo.successful[i]+"</li>");
+			} 
+
+			for(var i =0 ; i < jo.captcha.length ; i++ ){
+				$("#captcha-web").prepend('<li class="li-items">'+jo.captcha[i]+"</li>");
+			} 
+
+
+			for(var i =0 ; i < jo.unsuccessful.length ; i++ ){
+				console.log(jo.unsuccessful[i]);
+				$("#unsuccessful-web").prepend('<li class="li-items">'+jo.unsuccessful[i]+"</li>");
+			} 
+
 		}
+
 
 		function submitForm(formData){
 			if ($("#dataForm")[0].checkValidity()){
 				loadScreen();
 				$.ajax({
 					type: 'POST',
+					cache : false,
 					data: JSON.stringify(formData),
-					url: 'http://localhost:8000/form',                      
+					url: 'http://localhost:8000/form', 
+					error:function(){
+						//error
+					},                     
 					success: function(data) {
 						unloadScreen();
 						displayResults(data);
@@ -433,7 +447,6 @@
 
 		});
 	</script>
-
 
 </body>
 </html>

@@ -120,6 +120,10 @@ hr{
   background-color: #23615b;
 }
 
+.li-items{
+   padding: 5px;
+}
+
   .overlay {
     height: 0%;
     width: 100%;
@@ -128,7 +132,7 @@ hr{
     top: 0;
     left: 0;
     background-color: rgb(0,0,0);
-    background-color: #26a69ab5;
+    background-color: #26a69ad4;
     overflow-y: hidden;
     transition: 0.5s;
   }
@@ -137,7 +141,7 @@ hr{
     position: relative;
     top: 25%;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 8px;
   }
 
     .overlay-content1 {
