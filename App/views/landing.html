@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Mete data-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="favicon.ico">
+
+
+	<!-- Style Sheets-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="loadingDiv.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+	<link rel="stylesheet" type="text/css" href="materialize/css/materialize.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	<script src="https://rawgit.com/marioizquierdo/jquery.serializeJSON/master/jquery.serializejson.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+
+	<title>SPES-PE</title>
+</head>
+
+<body>
+
+
+	<!-- == Results Display == -->
+	<div id="myNav" class="overlay">
+
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div class="overlay-content" style="top:15%;">
+			<div class="row" style="padding-bottom: 12px;">
+				<div class="col-md-4">
+					<h2 class="title-h2a">Succesful Websites</h2>
+					<ul id="successful-web">
+					</ul>
+					<h2 class="title-h2b">*These websites were sussecfully completed.</h2>
+				</div>
+
+				<div class="col-md-4">
+					<h2 class="title-h2a">Captcha Websites</h2>
+					<ul id="captcha-web">
+					</ul>
+					<h2 class="title-h2b">*Please check the opened browser tabs.</h2>
+				</div>
+
+				<div class="col-md-4">
+					<h2 class="title-h2a">Unsuccesful Websites</h2>
+					<ul id="unsuccessful-web">
+					</ul>
+					<h2 class="title-h2b">*Press on the names to redirect you to the websites.</h2>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- ====================== -->
+
+
+	<!-- == Form Input == -->
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2 well">
+
+				<div class="col-sm-12 form-legend">
+					<h2 class="title-h2">Event Form</h2>
+				</div>
+				<div class="col-sm-12 form-column">
+					<form id="dataForm">
+
+
+
+						<!-- Contact Details -->
+						<hr style="margin-top: 0">
+						<section>
+
+							<div class="form-group">
+								<label for="contact-n" class="labelTitle">Contact Name</label>
+								<input type="text"  name="event_contact_name" id="contact-n" class="form-control" placeholder="Enter contact name" required>
+							</div>
+
+
+							<div class="form-group">
+								<label for="contact-p" class="labelTitle">Contact Phone Number</label>
+								<input type="tel"  name="event_contact_number" id="contact-p" class="form-control" placeholder="(123) 456-7890" required>
+							</div>
+						</section>
+						<hr>
+
+
+						<!-- Organizer Details -->
+						<section>
+							<div class="form-group">
+								<label for="Organizer-n" class="labelTitle">Organizer's Name</label>
+								<input type="text"  name="event_organizer_name" id="Organizer-n" class="form-control" placeholder="Enter the Organizer's name" required>
+							</div>
+
+
+							<div class="form-group">
+								<label for="Organizer-e" class="labelTitle">Organizer's Email</label>
+								<input type="email" list="e-sugg"  name="event_organizer_email" id="Organizer-e" class="form-control" placeholder="Enter the Organizer's email" required>
+							</div>
+
+							<datalist id="e-sugg">
+								<option>education@stanleyparkecology.ca</option>
+								<option>programs@stanleyparkecology.ca</option>
+								<option>outreach@stanleyparkecology.ca</option>
+							</datalist>
+
+							<div class="form-group">
+								<label for="phone" class="labelTitle">Organizer's Phone Number</label>
+								<input type="tel"  name="event_organizer_phone_number" id="phone" class="form-control" placeholder="(123) 456-7890" required>
+							</div>
+
+						</section>
+						<hr>
+
+
+
+
+
+						<!-- Event Details -->
+						<section>
+
+							<div class="form-group">
+								<label for="title" class="labelTitle">Event Title</label>
+								<input type="text"  name="event_title" id="title" class="form-control" placeholder="Enter your event's title" required>
+							</div>
+
+
+							<div>
+
+								<div  class="form-group">
+									<label for="calender_s" class="labelTitle">Event Start Date/Time</label><br>
+									<div class="ui calendar" id="calender1">
+
+										<div class="ui input left icon">
+											<i class="calendar icon"></i>
+											<input type="text"  class="form-control" id="calendar_s" name="event_date_start"  placeholder="Date/Time"  required>
+										</div>
+									</div>
+								</div><br><br>
+
+
+								<div class="form-group">
+									<label for="calender_e" class="labelTitle">Event End Date/Time</label><br>
+									<div class="ui calendar" id="calender2">
+										<div class="ui input left icon">
+											<i class="calendar icon"></i>
+											<input type="text"  class="form-control" id="calendar_e" name="event_date_end"  placeholder="Date/Time"  required>
+										</div>
+									</div>
+								</div><br><br>
+
+
+							</div>
+
+
+							<div class="form-group">
+								<label for="eurl" class="labelTitle">Event URL <span style="margin-left: 7px;" class="sub-t">*website/facebook/eventbrite..</span> </label>
+								<input type="text"  name="event_url" id="eurl" class="form-control" placeholder="Enter your event's url" required>
+							</div>
+
+
+
+							<div class="form-group">
+								<label for="age-g" class="labelTitle">Age Group</label>
+								<input type="text"  name="event_age_group" id="age-g" class="form-control" placeholder="Enter your event's age group" required>
+							</div>
+
+
+							<div class="form-group">
+								<label for="price" class="labelTitle">Price</label>
+								<input type="text"  name="event_price" id="price" class="form-control" placeholder="Enter your event's price" required>
+							</div>
+
+
+							<div class="form-group">
+								<label for="turl" class="labelTitle">Ticket URL</label>
+								<input type="text"  name="event_ticket_url" id="turl" class="form-control" placeholder="Enter your event's ticket buying url" required>
+							</div>
+
+
+
+							<div class="form-group">
+								<label for="details" class="labelTitle">Event Details </label>
+								<textarea rows="14" class="form-control"  id="details" name="event_details"   onkeyup="limitWords(this.id)" placeholder="Enter your event details here" required></textarea>
+								<p class="sub-t" style="margin-top: 4px;">50 Words limit</p>
+							</div>
+
+
+						</section>
+						<hr>
+
+
+
+
+
+						<!-- Event Location -->
+						<section>
+
+							<div>
+
+
+								<div class="form-group">
+									<label for="add1" class="labelTitle">Venue</label>
+									<input type="text"  name="event_venue" list="sugg" id="add1" class="form-control" placeholder="Enter event's venue" required>
+								</div>
+
+
+
+								<datalist id="sugg">
+									<option>Stanley Park Dining Pavilion</option>
+									<option>Stanley Park Nature House on Lost Lagoon</option>
+									<option> #19 Stanley Park Bus Loop</option>
+								</datalist>
+
+								<div class="form-group">
+									<label for="street" class="labelTitle">Street</label>
+									<input type="text"  name="event_street"  id="street" class="form-control" placeholder="Street address" required>
+								</div>
+
+
+
+								<div class="form-group">
+									<label for="city" class="labelTitle">City</label>
+									<input type="text"  name="event_city" id="city" class="form-control" placeholder="City" required>
+								</div>
+
+								<div class="form-group">
+									<label for="pcode" class="labelTitle">Postal Code</label>
+									<input type="text"  name="event_postal_code" id="pcode" class="form-control" placeholder="Postal code" required>
+								</div>
+
+
+							</div>
+
+
+
+						</section>
+						<hr>
+
+
+
+
+
+						<!-- Script Settings  -->
+						<section>
+
+							<div >
+								<label for="selector" class="labelTitle">Websites</label><br>
+								<select  id="selector" name="event_websites[]" class="selectpicker" data-width="auto" data-live-search="true" multiple multiple data-actions-box="true" required>
+
+									<option value="Village Vancouver">Village Vancouver</option>
+									<option value="Vancity">Vancity</option>
+									<option value="Craigslist">Craigslist</option>
+									<option value="Kids Vancouver">Kids Vancouver</option>
+
+									<option data-divider="true"></option>
+
+									<option value="City of North Van Community">City of North Van Community</option>
+									<option value="Eventful">Eventful</option>
+									<option value="Planet Friendly">Planet Friendly</option>
+									<option value="Vancouver Community Network">Vancouver Community Network</option>
+
+									<option data-divider="true"></option>
+
+									<option value="Youth Core">Youth Core</option>
+									<option value="Kijiji">Kijiji</option>
+									<option value="Yelp">Yelp</option>
+									<option value="Global News">Global News</option>
+
+									<option data-divider="true"></option>
+
+									<option value="North Shore">North Shore</option>
+									<option value="Vancouver Weekly">Vancouver Weekly</option>
+									<option value="Ubyssey">Ubyssey</option>
+									<option value="Metro Vancouver">Metro Vancouver</option>
+								</select>
+
+							</div><br>
+
+
+
+							<div>
+								<div class="form-group">
+									<label for="ch" class="labelTitle">Event Tags <span style="margin-left: 7px;" class="sub-t">*Optional</span> </label>
+									<div id="ch" class="chips chips-placeholder" style="margin-top: 0;"></div>
+								</div>
+							</div>
+
+
+						</section>
+
+
+
+
+
+
+						<br><br><input type="button" value="Submit"  onclick="submitForm();" id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- ====================== -->
+
+		<h5 class="cr"> ©CTC - 2018</h5>
+
+		<!-- == Loading screen == -->
+		<div id="loaddiv" class=""><div class="loading-wheel"></div></div>
+		<!-- ====================== -->
+
+		<!-- == Error == -->
+		<div id="errordiv" class=""></div>
+		<!-- ====================== -->
+
+
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+		<script type="text/javascript">
+
+		//For the date/time section
+		$('#calender1').calendar();
+		$('#calender2').calendar();
+
+		//Tags script
+		$('.chips-placeholder').material_chip({
+			placeholder: 'Enter a tag',
+			secondaryPlaceholder: '+Tag',
+		});
+
+		//Json format of form
+		$(function() {
+			$("#formSubmit").click(function() {
+				var form = $("#dataForm").serializeJSON();
+				var tag= $('.chips-placeholder').material_chip('data');
+				var tagArr = [];
+				for (var i = 0; i < tag.length; i++) {
+					tagArr.push(tag[i].tag);
+				}
+				form["event_tags"] = tagArr ;
+				//Contains the form data
+				var dataString = JSON.stringify(form);
+				console.log(dataString);
+				submitForm(dataString);
+			});
+
+		});
+
+
+	</script>
+
+	<script type="text/javascript">
+
+		function loadScreen(){
+			document.getElementById("loaddiv").className = "loading style-2";
+		}
+
+		function unloadScreen(){
+			document.getElementById("loaddiv").className = "";
+		}
+
+		function displayResults(data){
+			openNav();
+			//var jss = '{"successful": ["Test", "Eventful", "Metro Vancouver"], "captcha": ["Vancity"], "unsuccessful": ["Eventful", "Metro Vancouver"]}';
+			var jo = JSON.parse(data);
+
+			for(var i =0 ; i < jo.successful.length ; i++ ){
+				$("#successful-web").prepend('<li class="li-items">'+jo.successful[i]+"</li>");
+			}
+
+			for(var i =0 ; i < jo.captcha.length ; i++ ){
+				$("#captcha-web").prepend('<li class="li-items">'+jo.captcha[i]+"</li>");
+			}
+
+
+			for(var i =0 ; i < jo.unsuccessful.length ; i++ ){
+				console.log(jo.unsuccessful[i]);
+				$("#unsuccessful-web").prepend('<li class="li-items">'+jo.unsuccessful[i]+"</li>");
+			}
+
+		}
+
+
+		function submitForm(formData){
+			if ($("#dataForm")[0].checkValidity()){
+				loadScreen();
+				$.ajax({
+					type: 'POST',
+					cache : false,
+					data: JSON.stringify(formData),
+					url: 'http://localhost:8000/form',
+					error:function(){
+						//error
+					},
+					success: function(data) {
+						unloadScreen();
+						displayResults(data);
+						console.log('success');
+						console.log(JSON.stringify(data));
+					}
+				});
+			}
+			else
+				$("#dataForm")[0].reportValidity();
+		}
+	</script>
+
+	<script type="text/javascript">
+		function openNav() {
+			document.getElementById("myNav").style.height = "100%";
+		}
+		function closeNav() {
+			document.getElementById("myNav").style.height = "0%";
+		}
+
+	</script>
+
+	<script type="text/javascript">
+		$('#phone').mask('(000) 000-0000');
+		$('#contact-p').mask('(000) 000-0000');
+		$('#pcode').mask('AA AAA-AAA');
+
+		function limitWords(id) {
+			var maxWords=3;
+			var d=document.getElementById(id);
+			if ( d.value.split(' ').length > maxWords ) {
+				$('#details').css('background-color','#ffd6d6');
+				setInterval(function(){ $('#details').css('background-color','#fff');}, 1000);
+				t=d.value.split(' ').slice(0,maxWords).join(' ');
+				d.value=t;
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$("#add1").keyup(function(){
+			if(this.value == "Stanley Park Dining Pavilion"){
+				$("#street").val("2nd floor 610 Pipeline Rd");
+				$("#city").val("Vancouver");
+				$("#pcode").val("BC V6G 1Z4");
+			}
+
+			if(this.value == "Stanley Park Nature House on Lost Lagoon"){
+				$("#street").val("712 Lost Lagoon Path");
+				$("#city").val("Vancouver");
+				$("#pcode").val("BC V6G 2S1");
+			}
+
+			if(this.value == "#19 Stanley Park Bus Loop"){
+				$("#street").val("610 Pipeline Rd");
+				$("#city").val("Vancouver");
+				$("#pcode").val("BC V6G 1Z4");
+			}
+
+		});
+	</script>
+
+</body>
+</html>

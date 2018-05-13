@@ -1,0 +1,30 @@
+{  
+   "event_organizer_name":"test",
+   "event_organizer_email":"test@test",
+   "event_organizer_phone_number":"12345",
+   "event_title":"1234",
+   "event_date_start":"May 1, 2018 5:20 AM",
+   "event_date_end":"May 1, 2018 5:20 AM",
+   "event_age_group":"123",
+   "event_price":"123",
+   "event_details":"12345",
+   "event_venue":"q",
+   "event_street":"a",
+   "event_city":"a",
+   "event_postal_code":"a",
+   "event_websites":[  
+      "Village Vancouver",
+      "Vancity",
+      "",
+      "",
+      ""
+   ],
+   "event_tags":[  
+      "1",
+      "23",
+      "42",
+      "124",
+      "1414",
+      "14"
+   ]
+}
