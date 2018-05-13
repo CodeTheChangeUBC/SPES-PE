@@ -80,10 +80,26 @@
 
 
 
-						<!-- Organizer Details -->
+						<!-- Contact Details -->
 						<hr style="margin-top: 0">
 						<section>
 
+							<div class="form-group">
+								<label for="contact-n" class="labelTitle">Contact Name</label>
+								<input type="text"  name="event_contact_name" id="contact-n" class="form-control" placeholder="Enter contact name" required>
+							</div>
+
+
+							<div class="form-group">
+								<label for="contact-p" class="labelTitle">Contact Phone Number</label>
+								<input type="tel"  name="event_contact_number" id="contact-p" class="form-control" placeholder="(123) 456-7890" required>
+							</div>
+						</section>
+						<hr>
+
+
+						<!-- Organizer Details -->
+						<section>
 							<div class="form-group">
 								<label for="Organizer-n" class="labelTitle">Organizer's Name</label>
 								<input type="text"  name="event_organizer_name" id="Organizer-n" class="form-control" placeholder="Enter the Organizer's name" required>
@@ -150,6 +166,12 @@
 							</div>
 
 
+							<div class="form-group">
+								<label for="eurl" class="labelTitle">Event URL <span style="margin-left: 7px;" class="sub-t">*website/facebook/eventbrite..</span> </label>
+								<input type="text"  name="event_url" id="eurl" class="form-control" placeholder="Enter your event's url" required>
+							</div>
+
+
 
 							<div class="form-group">
 								<label for="age-g" class="labelTitle">Age Group</label>
@@ -189,14 +211,10 @@
 							
 							<div>
 
-								<div class="form-group">
-									<label for="ven" class="labelTitle">Venue</label>
-									<input type="text"  name="event_venue"  id="ven" class="form-control" placeholder="Enter your event's Venue" required>
-								</div>
 
 								<div class="form-group">
-									<label for="street" class="labelTitle">Address line 1</label>
-									<input type="text"  name="event_street" list="sugg" id="add1" class="form-control" placeholder="Enter address line 1" required>
+									<label for="add1" class="labelTitle">Venue</label>
+									<input type="text"  name="event_venue" list="sugg" id="add1" class="form-control" placeholder="Enter event's venue" required>
 								</div>
 
 
@@ -412,6 +430,7 @@
 
 	<script type="text/javascript">
 		$('#phone').mask('(000) 000-0000');
+		$('#contact-p').mask('(000) 000-0000');
 		$('#pcode').mask('AA AAA-AAA');
 
 		function limitWords(id) {
