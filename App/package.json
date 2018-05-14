@@ -1,7 +1,8 @@
 {
-  "name": "laproject",
+  "name": "SPES-PE",
   "version": "1.0.0",
-  "description": "packaging for learning analytics project 2k18",
+  "bin": "./app.js",
+  "description": "An app for SPES-PE that automatically pushes events to calendars",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +13,8 @@
     "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
     "exceljs": "^0.9.1"
+  },
+  "pkg" : {
+    "assets": ["views/*", "scripts/*"]
   }
 }

@@ -5,6 +5,7 @@ import json
 def main():
     # How to receive input
     input = sys.argv[1]
+    j_obj = json.loads(input)
 
     # Test
     file = open("scripts/test.txt", "w")
