@@ -5,6 +5,7 @@ var app = express();
 // use body parser to parse form
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // set view engine to html
 app.use(express.static(__dirname + '/views'));
@@ -22,7 +23,6 @@ app.post('/form', function(req, res) {
 
   // get data from form
   var data = req.body;
-  console.log(data);
 
   // Set options for python script call
   var options = {
@@ -34,11 +34,8 @@ app.post('/form', function(req, res) {
   PythonShell.run('/scripts/test.py', options, function (err, results) {
     if (err) throw err;
     var returnString = results[0];
-    // res.send(returnString);
+    res.send(returnString);
    });
-
-  // redirect to home page
-  res.redirect("/");
 })
 
 // set port to localhost:8000
