@@ -307,7 +307,7 @@
 
 
 
-						<br><br><input type="button" value="Submit"  onclick="submitForm();" id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
+						<br><br><input type="button" value="Submit" id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
 
 
 					</form>
@@ -407,6 +407,7 @@
 					},
 					success: function(data) {
 						unloadScreen();
+						console.log(data);
 						displayResults(data);
 						console.log('success');
 						console.log(JSON.stringify(data));
