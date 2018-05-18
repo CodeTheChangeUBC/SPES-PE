@@ -15,7 +15,7 @@ var PythonShell = require('python-shell');
 
 // home page
 app.get('/', function (req, res) {
-  res.sendFile('landing.html',  {"root": __dirname + '/views'});
+	res.sendFile('landing.html',  {"root": __dirname + '/views'});
 })
 
 // POST Request for form
@@ -27,19 +27,25 @@ app.post('/form', function(req, res) {
 
   // Set options for python script call
   var options = {
-    mode: 'json',
-    args: [data]
+  	mode: 'json',
+  	args: [data]
   }
 
   // Run python script
-  PythonShell.run('/scripts/test.py', options, function (err, results) {
-    if (err) throw err;
-    var returnJSON = results[0];
-    res.send(returnJSON);
-   });
+  PythonShell.run('/scripts/mainScript.py', options, function (err, results) {
+  	if (err) throw err;
+  	var returnJSON = results[0];
+  	res.send(returnJSON);
+  });
 })
 
 // set port to localhost:8000
 app.listen(8000, function () {
-  console.log('Server Started!');
+	console.log('\n\n\n\n\n\n                                      =========================================\n')
+	console.log('                                                  Code the Change UBC ')
+	console.log('\n                   Website: https://codethechangeubc.org  ~  Email: codethechangeubc@gmail.com')
+	console.log('\n                                                     Developers:\n')
+	console.log('                               Karim Eldegwy, Ahmed Abdelmoniem, Nadeem Abdulaziz ,Seif Ghazi\n')
+	console.log('                                  ================================================\n')
+	console.log('\n                                         Server has sucessfully Started!');
 })
