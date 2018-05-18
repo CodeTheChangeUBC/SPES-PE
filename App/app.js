@@ -23,6 +23,7 @@ app.post('/form', function(req, res) {
 
   // get data from form
   var data = JSON.stringify(req.body);
+  console.log(data);
 
   // Set options for python script call
   var options = {
@@ -34,7 +35,7 @@ app.post('/form', function(req, res) {
   PythonShell.run('/scripts/test.py', options, function (err, results) {
     if (err) throw err;
     var returnJSON = results[0];
-    res.send(JSON.stringify(returnJSON));
+    res.send(returnJSON);
    });
 })
 
