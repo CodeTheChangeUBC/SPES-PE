@@ -92,7 +92,7 @@
 
 							<div class="form-group">
 								<label for="contact-p" class="labelTitle">Contact Phone Number</label>
-								<input type="tel"  name="event_contact_number" id="contact-p" pattern=".{14,}" class="form-control" placeholder="(123) 456-7890" required>
+								<input type="tel"  name="event_contact_number" id="contact-p" class="form-control" placeholder="(123) 456-7890" required>
 							</div>
 						</section>
 						<hr>
@@ -119,7 +119,7 @@
 
 							<div class="form-group">
 								<label for="phone" class="labelTitle">Organizer's Phone Number</label>
-								<input type="tel"  name="event_organizer_phone_number" pattern=".{14,}"  id="phone" class="form-control" placeholder="(123) 456-7890" required>
+								<input type="tel"  name="event_organizer_phone_number" id="phone" class="form-control" placeholder="(123) 456-7890" required>
 							</div>
 
 						</section>
@@ -208,7 +208,7 @@
 
 						<!-- Event Location -->
 						<section>
-							
+
 							<div>
 
 
@@ -256,7 +256,7 @@
 
 						<!-- Script Settings  -->
 						<section>
-							
+
 							<div >
 								<label for="selector" class="labelTitle">Websites</label><br>
 								<select  id="selector" name="event_websites[]" class="selectpicker" data-width="auto" data-live-search="true" multiple multiple data-actions-box="true" required>
@@ -296,7 +296,7 @@
 								<div class="form-group">
 									<label for="ch" class="labelTitle">Event Tags <span style="margin-left: 7px;" class="sub-t">*Optional</span> </label>
 									<div id="ch" class="chips chips-placeholder" style="margin-top: 0;"></div>
-								</div>	
+								</div>
 							</div>
 
 
@@ -307,7 +307,7 @@
 
 
 
-						<br><br><input type="button" value="Submit"  id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
+						<br><br><input type="button" value="Submit" id="formSubmit" class="btn btn-success btn-block dgreen" style="font-family: sans-serif;">
 
 
 					</form>
@@ -332,18 +332,9 @@
 		<script type="text/javascript">
 
 		//For the date/time section
-		var today = new Date();
+		$('#calender1').calendar();
+		$('#calender2').calendar();
 
-		$('#calender1').calendar({
-			startMode: 'month',
-			minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1),
-		});
-
-		$('#calender2').calendar({
-			startMode: 'month',
-			minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1),
-		});
-		
 		//Tags script
 		$('.chips-placeholder').material_chip({
 			placeholder: 'Enter a tag',
@@ -360,12 +351,10 @@
 					tagArr.push(tag[i].tag);
 				}
 				form["event_tags"] = tagArr ;
-
-				form["event_organizer_phone_number"]=$('#phone').cleanVal();
-				form["event_contact_number"]=$('#contact-p').cleanVal();
-				form["event_postal_code"]=$('#pcode').cleanVal();
-
-				submitForm(form);
+				//Contains the form data
+				var dataString = JSON.stringify(form);
+				console.log(dataString);
+				submitForm(dataString);
 			});
 
 		});
@@ -385,20 +374,22 @@
 
 		function displayResults(data){
 			openNav();
-			
-			console.log(data)
-			for(var i =0 ; i < data.successful.length ; i++ ){
-				$("#successful-web").prepend('<li class="li-items">'+data.successful[i]+"</li>");
-			} 
+			//var jss = '{"successful": ["Test", "Eventful", "Metro Vancouver"], "captcha": ["Vancity"], "unsuccessful": ["Eventful", "Metro Vancouver"]}';
+			var jo = JSON.parse(data);
 
-			for(var i =0 ; i < data.captcha.length ; i++ ){
-				$("#captcha-web").prepend('<li class="li-items">'+data.captcha[i]+"</li>");
-			} 
+			for(var i =0 ; i < jo.successful.length ; i++ ){
+				$("#successful-web").prepend('<li class="li-items">'+jo.successful[i]+"</li>");
+			}
+
+			for(var i =0 ; i < jo.captcha.length ; i++ ){
+				$("#captcha-web").prepend('<li class="li-items">'+jo.captcha[i]+"</li>");
+			}
 
 
-			for(var i =0 ; i < data.unsuccessful.length ; i++ ){
-				$("#unsuccessful-web").prepend('<li class="li-items">'+data.unsuccessful[i]+"</li>");
-			} 
+			for(var i =0 ; i < jo.unsuccessful.length ; i++ ){
+				console.log(jo.unsuccessful[i]);
+				$("#unsuccessful-web").prepend('<li class="li-items">'+jo.unsuccessful[i]+"</li>");
+			}
 
 		}
 
@@ -409,16 +400,19 @@
 				$.ajax({
 					type: 'POST',
 					cache : false,
-					data: formData,
-					url: 'http://localhost:8000/form', 
+					data: JSON.stringify(formData),
+					url: 'http://localhost:8000/form',
 					error:function(){
 						//error
-					},                     
+					},
 					success: function(data) {
 						unloadScreen();
+						console.log(data);
 						displayResults(data);
+						console.log('success');
+						console.log(JSON.stringify(data));
 					}
-				});  
+				});
 			}
 			else
 				$("#dataForm")[0].reportValidity();
@@ -439,7 +433,6 @@
 		$('#phone').mask('(000) 000-0000');
 		$('#contact-p').mask('(000) 000-0000');
 		$('#pcode').mask('AA AAA-AAA');
-
 
 		function limitWords(id) {
 			var maxWords=3;
