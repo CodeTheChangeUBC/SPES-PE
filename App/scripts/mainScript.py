@@ -30,9 +30,9 @@ def eventful(info):
         endTime = info['event_date_end'][12:]
         venue=info['event_venue']
         description = info['event_details']
-        facebookURL = info['event_fbURL']
+        facebookURL = 'test'
         price = info['event_price']
-        link = info['event_url']
+        link = 'tes'
         
         driver.get('http://eventful.com/signin?goto=%2Fevents%2Fnew')
         try: 
