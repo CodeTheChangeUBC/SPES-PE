@@ -21,8 +21,19 @@ websites ={'successful':[],
            'unsuccessful':[]
           }
 
-def eventful(title,date,startTime,endTime,venue,description,facebookURL):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
+
+
+def eventful(info):
+        title = info['event_title']
+        date = info['event_date_start'][:10]
+        startTime=info['event_date_start'][12:]
+        endTime = info['event_date_end'][12:]
+        venue=info['event_venue']
+        description = info['event_details']
+        facebookURL = info['event_fbURL']
+        price = info['event_price']
+        link = info['event_url']
+        
         driver.get('http://eventful.com/signin?goto=%2Fevents%2Fnew')
         try: 
                 usernameField = driver.find_element_by_id("inp-username")
@@ -30,7 +41,7 @@ def eventful(title,date,startTime,endTime,venue,description,facebookURL):
                 passwordField = driver.find_element_by_id("inp-password")
                 passwordField.send_keys(password)
                 passwordField.submit()
-        except NoSuchElementException:
+        except:
                 print("Login form id changed!")
 
         try:
@@ -67,24 +78,46 @@ def eventful(title,date,startTime,endTime,venue,description,facebookURL):
            descriptionField.clear()
            descriptionField.send_keys(description)
 
+           
+           clickField = driver.find_element_by_id("click-more-options")
+           clickField.click()
+           priceField = driver.find_element_by_id("inp-price")
+           priceField.clear()
+           priceField.send_keys(price)
+
+           linkClick = driver.find_element_by_id("event-add-link-click")
+           linkClick.click()
+           linkField = driver.find_element_by_id("url-add-link")
+           linkField.send_keys(link)
+           linkClick = driver.find_element_by_id("inp-submit-add-link")
+           linkClick.click()
+
            facebookEventField = driver.find_element_by_id("inp-fb-event-link")
            facebookEventField.clear()
            facebookEventField.send_keys(facebookURL)
-        except NoSuchElementException:
+        except:
             websites['unsuccessful'].append("Eventful")
         else:
             websites['captcha'].append("Eventful")
         
 
-def youthCore(startTime,endTime,title,ageGroup,cost,venue,details,facebookURL):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        driver.get('http://youthcore.ca/index.php?action=create_event')
+def youthCore(info):
+        driver.execute_script("window.open('http://youthcore.ca/index.php?action=create_event', 'new window')")
+        title = info['event_title']
+        startTime=info['event_date_start'][12:]
+        endTime = info['event_date_end'][12:]
+        venue=info['event_venue']
+        details = info['event_details']
+        facebookURL = info['event_fbURL']
+        cost = info['event_price']
+        ageGroup = info['event_age_group']
+        
         try: 
                 nameField = driver.find_element_by_id("submitter_name")
                 nameField.send_keys(username)
                 emailField = driver.find_element_by_id("submitter_email")
                 emailField.send_keys(password)
-        except NoSuchElementException:
+        except TimeOutException:
                print('Login form id chnaged!')
                
 
@@ -116,18 +149,44 @@ def youthCore(startTime,endTime,title,ageGroup,cost,venue,details,facebookURL):
 
                 facebookField = driver.find_element_by_id("ta_facebook_event_url")
                 facebookField.send_keys(facebookURL)
-        except NoSuchElementException:
+        except:
                 websites['unsuccessful'].append("Youth Core")
         else:
                 websites['captcha'].append("Youth Core")
 
 
-def planetFriendly(title,city,province,description,contactName,contactEmail,contactPhone,contactWeb,password):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        driver.get('http://planetfriendly.net/submit3.html')
+def planetFriendly(info):
+        driver.execute_script("window.open('http://planetfriendly.net/submit3.html', 'new window')")
+
+        title = info['event_title']
+        description = info['event_details']
+        city = info['event_city']
+        contactName = info['event_organizer_name']
+        contactEmail = info['event_organizer_email']
+        contactPhone = info['event_organizer_phone_number']
+        contactWeb = info['event_url']
+        
         try:
                 titleField = driver.find_element_by_name("Title")
                 titleField.send_keys(title)
+
+##                startDateField = Select(driver.find_element_by_name("StartDate"))
+##                startDateField.select_by_visible_text(startDate)
+##
+##                startMonthField = Select(driver.find_element_by_name("StartMonth"))
+##                startMonthField.select_by_visible_text(startMonth)
+##
+##                startYearField = Select(driver.find_element_by_name("StartYear"))
+##                startYearField.select_by_visible_text(startYear)
+##
+##                endDateField = Select(driver.find_element_by_name("EndDate"))
+##                endDateField.select_by_visible_text(endDate)
+##
+##                endMonthField = Select(driver.find_element_by_name("EndMonth"))
+##                endMonthField.select_by_visible_text(endMonth)
+##
+##                endYearField = Select(driver.find_element_by_name("EndYear"))
+##                endYearField.select_by_visible_text(endYear)
 
                 cityField = driver.find_element_by_name("City")
                 cityField.send_keys(city)
@@ -159,7 +218,7 @@ def planetFriendly(title,city,province,description,contactName,contactEmail,cont
                 spamField = driver.find_element_by_name("Spam")
                 spam = "hello"
                 spamField.send_keys(spam)
-        except NoSuchElementException:
+        except:
                 websites['unsuccessful'].append("Planet Friendly")
         else:
                 try:
@@ -170,9 +229,22 @@ def planetFriendly(title,city,province,description,contactName,contactEmail,cont
                         websites['successful'].append("Planet Friendly")
 
 
-def globalNews(title,description,venue,street,city,province,country,organizerName,organizerEmail,organizerPhone):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        driver.get('https://globalnews.ca/bc/events/add/')
+def globalNews(info):        
+        title = info['event_title']
+        venue=info['event_venue']
+        description = info['event_details']
+        age = info['event_age_group']
+        city = info['event_city']
+        street = info['event_street']
+        organizerName = info['event_organizer_name']
+        organizerEmail = info['event_organizer_email']
+        organizerPhone = info['event_organizer_phone_number']
+        eventURL = info['event_url']
+        postalCode = info['event_postal_code']
+        ticketURL = info['event_ticketURL']
+
+
+        driver.execute_script("window.open('https://globalnews.ca/bc/events/add/', 'new window')")
         try:
                 nameField = driver.find_element_by_id("event-name")
                 nameField.send_keys(title)
@@ -193,13 +265,10 @@ def globalNews(title,description,venue,street,city,province,country,organizerNam
                 cityField.send_keys(city)
 
                 provinceField = driver.find_element_by_id("event-province")
-                provinceField.send_keys(province)
-
-                descriptionField = driver.find_element_by_id("event-description")
-                descriptionField.send_keys(description)
+                provinceField.send_keys("British Columbia")
 
                 countryField = driver.find_element_by_id("event-country")
-                countryField.send_keys(country)
+                countryField.send_keys("Canada")
 
                 organizerNameField = driver.find_element_by_id("event-organizer-name")
                 organizerNameField.send_keys(organizerName)
@@ -208,8 +277,21 @@ def globalNews(title,description,venue,street,city,province,country,organizerNam
                 organizerEmailField.send_keys(organizerEmail)
 
                 organizerPhoneField = driver.find_element_by_id("event-organizer-phone")
-                organizerPhoneField.send_keys(ordganizerPhone)
-        except NoSuchElementException:
+                organizerPhoneField.send_keys(organizerPhone)
+
+                agesField = driver.find_element_by_id("event-ages")
+                agesField.send_keys(age)
+
+                websiteField = driver.find_element_by_id("event-website")
+                websiteField.send_keys(eventURL)
+        
+                ticketField = driver.find_element_by_id("event-tickets")
+                ticketField.send_keys(ticketURL)
+
+                postalCodeField = driver.find_element_by_id("event-postal-code")
+                postalCodeField.send_keys(postalCode)
+
+        except:
                 websites['unsuccessful'].append("Global News")
         else:
                 try:
@@ -221,8 +303,8 @@ def globalNews(title,description,venue,street,city,province,country,organizerNam
 
 
 def kijiji(price,dateFrom,dateTo,title,description,postalCode,street,organizerPhone):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        driver.get('https://www.kijiji.ca/t-login.html?targetUrl=L3Atc2VsZWN0LWNhdGVnb3J5Lmh0bWw/Y2F0ZWdvcnlJZD0yODkmdXNlclJlZ2lzdGVyZWQ9dHJ1ZV54Tk1KeU9ySTA5U0Z3MDdzS213OC93PT0-')
+        driver.execute_script("window.open('https://www.kijiji.ca/t-login.html?targetUrl=L3Atc2VsZWN0LWNhdGVnb3J5Lmh0bWw/Y2F0ZWdvcnlJZD0yODkmdXNlclJlZ2lzdGVyZWQ9dHJ1ZV54Tk1KeU9ySTA5U0Z3MDdzS213OC93PT0-'
+                              , 'new window')")
         try: 
                 usernameField = driver.find_element_by_id("LoginEmailOrNickname")
         except NoSuchElementException:
@@ -276,7 +358,7 @@ def kijiji(price,dateFrom,dateTo,title,description,postalCode,street,organizerPh
 
                 numberField = driver.find_element_by_id("PhoneNumber")
                 numberField.send_keys(organizerPhone)
-        except NoSuchElementException:
+        except:
                 websites['unsuccessful'].append("Kijiji")
         else:
                 try:
@@ -287,9 +369,17 @@ def kijiji(price,dateFrom,dateTo,title,description,postalCode,street,organizerPh
                         websites['successful'].append("Kijiji")
 
 
-def metroVancouver(title,description,location,address,startDate,endDate,firstName,lastName,phone,email):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        driver.get('http://www.metrovancouver.org/events/Pages/add-event.aspx')
+def metroVancouver(info):
+
+        title = info['event_title']
+        location=info['event_venue']
+        description = info['event_details']
+        address = info['event_street']
+        organizerName = info['event_organizer_name']
+        organizerEmail = info['event_organizer_email']
+        organizerPhone = info['event_organizer_phone_number']
+        
+        driver.execute_script("window.open('http://www.metrovancouver.org/events/Pages/add-event.aspx', 'new window')")
         try:
                 titleField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_TitleField_ctl00_ctl00_TextField")
                 titleField.send_keys(title)
@@ -313,146 +403,169 @@ def metroVancouver(title,description,location,address,startDate,endDate,firstNam
                 endDateField.send_keys(endDate)
                 
                 firstNameField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_FirstNameField_ctl00_ctl00_TextField")
-                firstNameField.send_keys(firstName)
+                firstNameField.send_keys(organizerName)
 
                 lastNameField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_LastNameField_ctl00_ctl00_TextField")
-                lastNameField.send_keys(lastName)
+                lastNameField.send_keys(organizerName)
 
                 phoneField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_PhoneField_ctl00_ctl00_TextField")
                 phoneFiled.send_keys(phone)
 
                 emailField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_EMailField_ctl00_ctl00_TextField")
                 emailField.send_keys(email)
-        except NoSuchElementException:
+        except:
          websites['unsuccessful'].append("Metro Vancouver")
         else:
          websites['captcha'].append("Metro Vancouver")
 
         
 
-def cnv(submitterName,email,title,location,phone,url):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        browser.get('http://www.cnv.org/Parks-Recreation-and-Culture/Community-Events/Submit-an-Event')
+def cnv(info):
+        driver.execute_script("window.open('http://www.cnv.org/Parks-Recreation-and-Culture/Community-Events/Submit-an-Event', 'new window')")
+
+        title = info['event_title']
+        description = info['event_details']
+        location =info['event_venue']
+        name = info['event_organizer_name']
+        email = info['event_organizer_email']
+        phone = info['event_organizer_phone_number']
+        url = info['event_url']
 
 
-        browser.implicitly_wait(10)
-        browser.switch_to.frame("trumbaSubmitEventForm")
+        driver.implicitly_wait(10)
+        driver.switch_to.frame("trumbaSubmitEventForm")
 
         try:    
-                submitterNameField = browser.find_element_by_id("eaa_TextboxName")
+                submitterNameField = driver.find_element_by_id("eaa_TextboxName")
                 submitterNameField.clear()
-                submitterNameField.send_keys(submitterName)
+                submitterNameField.send_keys(name)
 
-                emailField = browser.find_element_by_id("eaa_TextboxEmail")
+                emailField = driver.find_element_by_id("eaa_TextboxEmail")
                 emailField.clear()
                 emailField.send_keys(email)
 
-                titleField = browser.find_element_by_id("eaa_custom3_0")
+                titleField = driver.find_element_by_id("eaa_custom3_0")
                 titleField.clear()
                 titleField.send_keys(title)
 
-                locationField = browser.find_element_by_id("eaa_TextboxLocation")
+                locationField = driver.find_element_by_id("eaa_TextboxLocation")
                 locationField.clear()
                 locationField.send_keys(location)
 
-                startMonthField = Select(browser.find_element_by_id("eaa_DropDownStartMonth"))
+                startMonthField = Select(driver.find_element_by_id("eaa_DropDownStartMonth"))
                 startMonthField.select_by_visible_text("May")
-                startMonthField = Select(browser.find_element_by_id("eaa_DropDownStartDay"))
+                startMonthField = Select(driver.find_element_by_id("eaa_DropDownStartDay"))
                 startMonthField.select_by_visible_text("2")
-                startMonthField = Select(browser.find_element_by_id("eaa_DropDownStartYear"))
+                startMonthField = Select(driver.find_element_by_id("eaa_DropDownStartYear"))
                 startMonthField.select_by_visible_text("2017")
 
-                startTimeHrField = Select(browser.find_element_by_id("eaa_DropDownStartHour"))
+                startTimeHrField = Select(driver.find_element_by_id("eaa_DropDownStartHour"))
                 startTimeHrField.select_by_visible_text("11")
-                startTimeMinField = Select(browser.find_element_by_id("eaa_DropDownStartMinute"))
+                startTimeMinField = Select(driver.find_element_by_id("eaa_DropDownStartMinute"))
                 startTimeMinField.select_by_visible_text("20")
-                startTimeField = Select(browser.find_element_by_id("eaa_DropDownStartAMPM"))
+                startTimeField = Select(driver.find_element_by_id("eaa_DropDownStartAMPM"))
                 startTimeField.select_by_visible_text("PM")
 
-                endTimeHrField = Select(browser.find_element_by_id("eaa_DropDownEndHour"))
+                endTimeHrField = Select(driver.find_element_by_id("eaa_DropDownEndHour"))
                 endTimeHrField.select_by_visible_text("11")
-                endTimeMinField = Select(browser.find_element_by_id("eaa_DropDownEndMinute"))
+                endTimeMinField = Select(driver.find_element_by_id("eaa_DropDownEndMinute"))
                 endTimeMinField.select_by_visible_text("40")
-                endTimeField = Select(browser.find_element_by_id("eaa_DropDownEndAMPM"))
+                endTimeField = Select(driver.find_element_by_id("eaa_DropDownEndAMPM"))
                 endTimeField.select_by_visible_text("PM")
 
-                organizerField = browser.find_element_by_id("eaa_custom29378_0")
+                organizerField = driver.find_element_by_id("eaa_custom29378_0")
                 organizerField.clear()
-                organizerField.send_keys(organizer)
+                organizerField.send_keys(name)
 
-                nameField = browser.find_element_by_id("eaa_custom29379_0")
+                nameField = driver.find_element_by_id("eaa_custom29379_0")
                 nameField.clear()
                 nameField.send_keys(name)
 
-                phoneField = browser.find_element_by_id("eaa_custom29380_0")
+                phoneField = driver.find_element_by_id("eaa_custom29380_0")
                 phoneField.clear()
                 phoneField.send_keys(phone)
 
-                emailField = browser.find_element_by_id("eaa_custom29641_0")
+                emailField = driver.find_element_by_id("eaa_custom29641_0")
                 emailField.clear()
                 emailField.send_keys(email)
 
-                urlField = browser.find_element_by_id("eaa_custom6_0")
+                urlField = driver.find_element_by_id("eaa_custom6_0")
                 urlField.clear()
                 urlField.send_keys(url)
-        except NoSuchElementException:
+
+##                descriptionField = driver.find_element_by_id("eaa_RowNotes")
+##                descriptionField.send_keys(description)
+
+##                submit = driver.find_element_by_id("eaa_buttonSubmit")
+##                submit.click()
+                
+        except:
                 websites['unsuccessful'].append("City of North Vancouver")
         else:
                 websites['captcha'].append("City of North Vancouver") 
 
-def ubyssey(title,description,host,startTime,endTime,location,address,ticket,email,phone):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        browser.get('https://www.ubyssey.ca/events/submit/form')
-        
+def ubyssey(info):
+        driver.execute_script("window.open('https://www.ubyssey.ca/events/submit/form', 'new window')")
+
+        title = info['event_title']
+        location=info['event_venue']
+        description = info['event_details']
+        address = info['event_street']
+        host = info['event_organizer_name']
+        email = info['event_organizer_email']
+        phone = info['event_organizer_phone_number']
+        ticket = info['event_ticketURL']
+
+
         try:
-            myElem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, 'id_title')))
+            myElem = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'id_title')))
         except TimeoutException:
             print("Loading took too much time!")
-            browser.quit()
+            driver.quit()
         try:     
-                titleField = browser.find_element_by_id("id_title")
+                titleField = driver.find_element_by_id("id_title")
                 titleField.clear()
                 titleField.send_keys(title)
 
-                descriptionField = browser.find_element_by_id("id_description")
+                descriptionField = driver.find_element_by_id("id_description")
                 descriptionField.clear()
                 descriptionField.send_keys(description)
 
-                hostField = browser.find_element_by_id("id_host")
+                hostField = driver.find_element_by_id("id_host")
                 hostField.clear()
                 hostField.send_keys(host)
 
-                categoryField = Select(browser.find_element_by_id("id_category"))
+                categoryField = Select(driver.find_element_by_id("id_category"))
                 categoryField.select_by_visible_text("Academic")
 
-                startTimeField = browser.find_element_by_id("id_start_time")
+                startTimeField = driver.find_element_by_id("id_start_time")
                 startTimeField.clear()
-                startTimeField.send_keys(startTime)
+##                startTimeField.send_keys(startTime)
 
-                endTimeField = browser.find_element_by_id("id_end_time")
+                endTimeField = driver.find_element_by_id("id_end_time")
                 endTimeField.clear()
-                endTimeField.send_keys(endTime)
+##                endTimeField.send_keys(endTime)
 
-                locationField = browser.find_element_by_id("id_location")
+                locationField = driver.find_element_by_id("id_location")
                 locationField.clear()
                 locationField.send_keys(location)
 
-                addressField = browser.find_element_by_id("id_address")
+                addressField = driver.find_element_by_id("id_address")
                 addressField.clear()
                 addressField.send_keys(address)
 
-                ticketField = browser.find_element_by_id("id_ticket_url")
+                ticketField = driver.find_element_by_id("id_ticket_url")
                 ticketField.clear()
                 ticketField.send_keys(ticket)
 
-                emailField = browser.find_element_by_id("id_submitter_email")
+                emailField = driver.find_element_by_id("id_submitter_email")
                 emailField.clear()
                 emailField.send_keys(email)
 
-                phoneField = browser.find_element_by_id("id_submitter_phone")
+                phoneField = driver.find_element_by_id("id_submitter_phone")
                 phoneField.clear()
                 phoneField.send_keys(phone)
-        except NoSuchElementException:
+        except:
               websites['unsuccessful'].append("Ubyssey")
         else:
                 try:
@@ -463,121 +576,158 @@ def ubyssey(title,description,host,startTime,endTime,location,address,ticket,ema
                         websites['successful'].append("Ubyssey")
 
 
-def northShore(name,email,phone,title,description,webLink):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        browser.get('http://www.nsnews.com/add-event')
-        browser.switch_to.frame("trumbaSubmitEventForm");
+def northShore(info):
+        driver.execute_script("window.open('http://www.nsnews.com/add-event', 'new window')")
+        driver.switch_to.frame("trumbaSubmitEventForm");
+
+
+        title = info['event_title']
+        description = info['event_details']
+        name = info['event_organizer_name']
+        email = info['event_organizer_email']
+        phone = info['event_organizer_phone_number']
+        price = info['event_price']
+        venue= info['event_venue']
+        webLink = info['event_url']
+
 
         try:
-            myElem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, 'eaa_TextboxName')))
+            myElem = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'eaa_TextboxName')))
         except TimeoutException:
             print("Loading took too much time!")
-            browser.quit()
+            driver.quit()
         try:
-                nameField = browser.find_element_by_id("eaa_TextboxName")
+                nameField = driver.find_element_by_id("eaa_TextboxName")
                 nameField.clear()
                 nameField.send_keys(name)
 
-                emailField = browser.find_element_by_id("eaa_TextboxEmail")
+                emailField = driver.find_element_by_id("eaa_TextboxEmail")
                 emailField.clear()
                 emailField.send_keys(email)
 
-                phoneField = browser.find_element_by_id("eaa_TextboxPhone")
+                phoneField = driver.find_element_by_id("eaa_TextboxPhone")
                 phoneField.clear()
                 phoneField.send_keys(phone)
 
-                titleField = browser.find_element_by_id("eaa_custom3_0")
+                titleField = driver.find_element_by_id("eaa_custom3_0")
                 titleField.clear()
                 titleField.send_keys(title)
 
+                priceField = driver.find_element_by_id("eaa_custom33705_0")
+                priceField.send_keys(price)
 
-                descriptionField = browser.find_element_by_id("eaa_TextboxLocation")
+##                cityField = Select(driver.find_element_by_class_name("select2-search__field"))
+##                cityField.select_by_visible_text(city)
+
+                locationField = driver.find_element_by_id("eaa_TextboxLocation")
+                locationField.send_keys(venue)
+                
+                descriptionField = driver.find_element_by_name("eaa$custom4_0")
                 descriptionField.clear()
                 descriptionField.send_keys(description)
 
-                startDayField = Select(browser.find_element_by_id("eaa_DropDownStartMonth"))
-                startDayField.select_by_visible_text("May")
-                startMonthField = Select(browser.find_element_by_id("eaa_DropDownStartDay"))
-                startMonthField.select_by_visible_text("2")
-                startMonthField = Select(browser.find_element_by_id("eaa_DropDownStartYear"))
-                startMonthField.select_by_visible_text("2018")
+##                startDayField = Select(driver.find_element_by_id("eaa_DropDownStartMonth"))
+##                startDayField.select_by_visible_text("May")
+##                startMonthField = Select(driver.find_element_by_id("eaa_DropDownStartDay"))
+##                startMonthField.select_by_visible_text("2")
+##                startMonthField = Select(driver.find_element_by_id("eaa_DropDownStartYear"))
+##                startMonthField.select_by_visible_text("2018")
+##
+##                startTimeHrField = Select(driver.find_element_by_id("eaa_DropDownStartHour"))
+##                startTimeHrField.select_by_visible_text("11")
+##                startTimeMinField = Select(driver.find_element_by_id("eaa_DropDownStartMinute"))
+##                startTimeMinField.select_by_visible_text("20")
+##                startTimeField = Select(driver.find_element_by_id("eaa_DropDownStartAMPM"))
+##                startTimeField.select_by_visible_text("PM")
+##
+##                durationField = Select(driver.find_element_by_id("eaa_DropDownDurationHours"))
+##                durationField.select_by_visible_text("3 hours")
 
-                startTimeHrField = Select(browser.find_element_by_id("eaa_DropDownStartHour"))
-                startTimeHrField.select_by_visible_text("11")
-                startTimeMinField = Select(browser.find_element_by_id("eaa_DropDownStartMinute"))
-                startTimeMinField.select_by_visible_text("20")
-                startTimeField = Select(browser.find_element_by_id("eaa_DropDownStartAMPM"))
-                startTimeField.select_by_visible_text("PM")
-
-                durationField = Select(browser.find_element_by_id("eaa_DropDownDurationHours"))
-                durationField.select_by_visible_text("3 hours")
-
-                eventTypeField = Select(browser.find_element_by_id("eaa_custom17792_0_selectedItems"))
+                eventTypeField = Select(driver.find_element_by_id("eaa_custom17792_0_selectedItems"))
                 eventTypeField.select_by_visible_text("All ages")
 
-                webLinkField = browser.find_element_by_id("eaa_custom6_0")
+                webLinkField = driver.find_element_by_id("eaa_custom6_0")
                 webLinkField.clear()
                 webLinkField.send_keys(webLink)
 
-                descriptionField = browser.find_element_by_id("eaa_custom4_0")
+                descriptionField = driver.find_element_by_id("eaa_custom4_0")
                 descriptionField.clear()
                 descriptionField.send_keys(description)
-        except NoSuchElementException:
+        except:
               websites['unsuccessful'].append("North Shore")
         else:
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_id("eaa_custom6_0")
                         websites['unsuccessful'].append("North Shore")
-                except NoSuchElementException:
+                except:
                         websites['successful'].append("North Shore")
 
         
 
-def craigsList(title,postalCode,description,email,phone,street,city):
-        ## driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't') 
-        browser.get('http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit')
+def craigsList(info):
+        driver.execute_script("window.open('http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit', 'new window')")
+
+        title = info['event_title']
+        venue=info['event_venue']
+        description = info['event_details']
+        city = info['event_city']
+        street = info['event_street']
+        name = info['event_organizer_name']
+        email = info['event_organizer_email']
+        phone = info['event_organizer_phone_number']
+        postalCode = info['event_postal_code']
+
+
+
         try:
-            myElem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, 'PostingTitle')))
+            myElem = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'PostingTitle')))
         except TimeoutException:
             print("Loading took too much time!")
-            browser.quit()
+            driver.quit()
         try:
-                titleField = browser.find_element_by_id("PostingTitle")
+                titleField = driver.find_element_by_id("PostingTitle")
                 titleField.clear()
                 titleField.send_keys(title)
 
-                postalCodeField = browser.find_element_by_id("postal_code")
+                postalCodeField = driver.find_element_by_id("postal_code")
                 postalCodeField.clear()
                 postalCodeField.send_keys(postalCode)
 
-                descriptionField = browser.find_element_by_id("PostingBody")
+                descriptionField = driver.find_element_by_id("PostingBody")
                 descriptionField.clear()
                 descriptionField.send_keys(description)
 
-                durationField = Select(browser.find_element_by_name("eventDuration"))
+                durationField = Select(driver.find_element_by_name("eventDuration"))
                 durationField.select_by_index(0)
 
-                emailField = browser.find_element_by_id("FromEMail")
+                emailField = driver.find_element_by_id("FromEMail")
                 emailField.clear()
                 emailField.send_keys(email)
 
-                emailField = browser.find_element_by_id("ConfirmEMail")
+                emailField = driver.find_element_by_id("ConfirmEMail")
                 emailField.clear()
                 emailField.send_keys(email)
 
-                phoneField = browser.find_element_by_id("contact_phone")
+                phoneField = driver.find_element_by_id("contact_phone")
                 phoneField.clear()
                 phoneField.send_keys(phone)
 
-                streetField = browser.find_element_by_id('xstreet0')
+                streetField = driver.find_element_by_id('xstreet0')
                 streetField.clear()
                 streetField.send_keys(street)
 
-                cityField = browser.find_element_by_id('city')
+                venueField = driver.find_element_by_id('venue_name')
+                venueField.clear()
+                venueField.send_keys(venue)
+
+                nameField = driver.find_element_by_id('contact_name')
+                nameField.send_keys(name)
+
+                cityField = driver.find_element_by_id('city')
                 cityField.clear()
                 cityField.send_keys(city)
-        except NoSuchElementExcpetion:
+        except:
              websites['unsuccessful'].append("Craigslist")
         else:
                 try:
@@ -587,51 +737,79 @@ def craigsList(title,postalCode,description,email,phone,street,city):
                 except NoSuchElementException:
                         websites['successful'].append("Craigslist")
 
+def boredInVancouver(info):
+        driver.execute_script("window.open('http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit', 'new window')")
 
+        title = info['event_title']
+        venue=info['event_venue']
+        description = info['event_details']
+        name = info['event_organizer_name']
+        email = info['event_organizer_email']
+        url = info['event_url']
 
+        try:
+                titleField = driver.find_element_by_id("g32-nameoflisting")
+                titleField.clear()
+                titleField.send_keys(title)
 
+                descriptionField = driver.find_element_by_id("contact-form-comment-g32-briefdescriptionoflistingandwemeanbrief-wehaveveryshortattentionspans")
+                descriptionField.clear()
+                descriptionField.send_keys(description)
 
-def writeToJSONFile(path, fileName, data):
-    filePathNameWExt = './' + path + '/' + fileName + '.json'
-    with open(filePathNameWExt, 'w') as fp:
-        json.dump(data, fp)
+                emailField = driver.find_element_by_id("g32-youremail")
+                emailField.clear()
+                emailField.send_keys(email)
 
+                urlField = driver.find_element_by_id("g32-url")
+                urlField.clear()
+                urlField.send_keys(url)
+
+                venueField = driver.find_element_by_id('g32-dateslocationpricinginfo')
+                venueField.clear()
+                venueField.send_keys(venue)
+
+                nameField = driver.find_element_by_id('g32-yourname')
+                nameField.send_keys(name)
+
+=        except:
+             websites['unsuccessful'].append("Bored In Vancouver")
+        else:
+                try:
+                        driver.implicitly_wait(10)
+                        driver.find_element_by_id("g32-yourname")
+                        websites['unsuccessful'].append("Bored In Vancouver")
+                except NoSuchElementException:
+                        websites['successful'].append("Bored In Vancouver")
         
         
 def main():
         global driver
         global username
         global password
+        global info
 
         input = sys.argv[1]
         info = json.loads(input)
 
         functions = {
-                "Eventful": eventful(info['event_title'],info['event_date_start'][:10],info['event_date_start'][12:],info['event_date_end'][12:],
-                                     info['event_venue'],info['event_details'],info['event_fbURL']),
-                "Youth Core": youthCore(info['event_date_start'][12:],info['event_date_end'][12:],info['event_title'],info['event_age_group'],
-                                        info['event_price'],info['event_venue'],info['event_details'],info['event_fbURL']),
-                "Planet Friendly":planetFriendly(info['event_title'],info['event_city'],"British Columbia",info['event_details'],info['evvent_organizer_name'],
-                                                 info['event_organizer_email'],info['event_organizer_phone_number'],info['event_url'],password),
-                "Global News": globalNews(info['event_title'],info['event_details'],info['event_venue'],info['event_street'],info['event_city'],"British Columbia",
-                                          "Canada",info['event_organizer_name'],info['event_organizer_email'],info['event_organizer_phone_number']),
-                "Kijiji": kijiji(info['event_price'],info['event_date_start'],info['event_date_end'],info['event_title'],info['event_details'],info['event_postal_code'],
-                                 info['event_street'],info['event_organizer_phone_number']),
-                "Metro Vancouver": metroVancouver(info['event_title'],info['event_details'],info['event_city'],info['event_street'],info['event_date_start'][:10],
-                                                  info['event_date_end'][:10],info['event_organizer_name'],info['event_organizer_name'], info['event_organizer_phone_number'],
-                                                  info['event_organizer_email']),
-                "Community of North Vancouver": cnv(info['event_organizer_name'],info['event_organizer_email'],info['event_title'],info['event_venue'],info['event_organizer_phone_number'],
-                                                    info['event_url']),
-                "Ubyssey": ubyssey(info['event_title'],info['event_details'],info['evvent_organizer_name'],info['event_date_start'],info['event_date_end'],info['event_venue'],
-                                   info['event_city'],info['event_street'],info['event_url'],info['event_organizer_email'],info['event_organizer_phone_number']),
-                "North Shore": northShore(info['event_organizer_name'],info['event_organizer_email'],info['event_organizer_phone_number'],info['event_title'],info['event_details'],
-                                          info['event_url']),
-                "Craigslist": craigsList(info['event_title'],info['event_postal_code'],info['event_details'],info['event_organizer_email'],info['event_organizer_phone_number'],
-                                         info['event_street'],info['event_city'])
+                "Eventful": eventful,
+                "Youth Core": youthCore,
+                "Planet Friendly":planetFriendly,
+                "Global News": globalNews,
+                "Kijiji": kijiji,
+                "Metro Vancouver": metroVancouver,
+                "Community of North Vancouver": cnv,
+                "Ubyssey": ubyssey,
+                "North Shore": northShore,
+                "Craigslist": craigsList,
+                "Bored in Vancouver": boredInVancouver
                 }
 
         for website in info['event_websites']:
-                return functions[website]()
+            try:
+                functions[website](info)
+            except Exception:
+                pass
 
         print(websites)
         sys.stdout.flush()
