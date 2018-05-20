@@ -465,6 +465,7 @@ def metroVancouver(info):
         description = info['event_details']
         address = info['event_street']
         organizerName = info['event_organizer_name']
+        lastName = info['event_organizer_name'][findnth(info['event_date_start']," ",1):]
         organizerEmail = info['event_organizer_email']
         organizerPhone = info['event_organizer_phone_number']
 
@@ -548,7 +549,7 @@ def metroVancouver(info):
                 firstNameField.send_keys(organizerName)
 
                 lastNameField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_LastNameField_ctl00_ctl00_TextField")
-                lastNameField.send_keys(organizerName)
+                lastNameField.send_keys(lastName)
 
                 phoneField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_PhoneField_ctl00_ctl00_TextField")
                 phoneFiled.send_keys(phone)
