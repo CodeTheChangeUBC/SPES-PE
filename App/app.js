@@ -49,7 +49,7 @@ app.post('/form', function(req, res) {
 	pyshell.end(function (err,code,signal) {
 		if (err) {
 			log.error(err + '\n');
-			throw err;
+			res.redirect("error.html");
 		}
 		console.log('The exit code was: ' + code);
 		console.log('The exit signal was: ' + signal);

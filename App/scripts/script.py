@@ -14,8 +14,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
-driver = webdriver.Chrome('C:/Users/kimoa/OneDrive/Desktop/final/SPES-PE/App/scripts/chromedriver.exe')
+driver = webdriver.Chrome(os.path.dirname(os.path.abspath(__file__))+'\\chromedriver.exe')
 
 handleCount = 0
 username = "ctcstanley1@gmail.com"
