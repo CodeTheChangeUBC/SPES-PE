@@ -13,13 +13,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 
-driver = webdriver.Chrome(r'chromedriver.exe')
+driver = webdriver.Chrome('C:/Users/kimoa/OneDrive/Desktop/final/SPES-PE/App/scripts/chromedriver.exe')
 
 username = "ctcstanley1@gmail.com"
 password = "codethechange"
-websites ={'successful':[],
-           'captcha':[],
-           'unsuccessful':[]
+websites ={"successful":[],
+           "captcha":[],
+           "unsuccessful":[]
           }
 handleCount = 0
 
@@ -53,13 +53,13 @@ def eventful(info):
                 passwordField.send_keys(password)
                 passwordField.submit()
         except:
-                websites['unsuccessful'].append("Eventful")
+                websites["unsuccessful"].append("Eventful")
                 return
 
         try:
             myElem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'inp-title')))
         except:
-            websites['unsuccessful'].append("Eventful")
+            websites["unsuccessful"].append("Eventful")
             return
 
         try:    
@@ -109,17 +109,16 @@ def eventful(info):
            facebookEventField.clear()
            facebookEventField.send_keys(facebookURL)
         except:
-            websites['unsuccessful'].append("Eventful")
+            websites["unsuccessful"].append("Eventful")
         else:
-            websites['captcha'].append("Eventful")
+            websites["captcha"].append("Eventful")
         
 
 def youthCore(info):
+        
         driver.execute_script("window.open('http://youthcore.ca/index.php?action=create_event', 'new window')")
-##        global handleCount
-##        handleCount+=1
-##        driver.switch_to.window(driver.window_handles[handleCount])
-        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"\t");
+        print(driver.window_handles)
+        driver.switch_to.window(driver.window_handles[1])
 
         title = info['event_title']
         startTime=info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
@@ -135,7 +134,7 @@ def youthCore(info):
         try:
             myElem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'submitter_name')))
         except:
-            websites['unsuccessful'].append("Youth Core")
+            websites["unsuccessful"].append("Youth Core")
             return
 
         
@@ -169,9 +168,9 @@ def youthCore(info):
                 facebookField = driver.find_element_by_id("ta_facebook_event_url")
                 facebookField.send_keys(facebookURL)
         except:
-                websites['unsuccessful'].append("Youth Core")
+                websites["unsuccessful"].append("Youth Core")
         else:
-                websites['captcha'].append("Youth Core")
+                websites["captcha"].append("Youth Core")
 
 
 def planetFriendly(info):
@@ -256,9 +255,9 @@ def planetFriendly(info):
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_name("ContactName")
-                        websites['unsuccessful'].append("Planet Friendly")
+                        websites["unsuccessful"].append("Planet Friendly")
                 except NoSuchElementException:
-                        websites['successful'].append("Planet Friendly")
+                        websites["successful"].append("Planet Friendly")
 
 
 def globalNews(info):
@@ -302,7 +301,7 @@ def globalNews(info):
         try:
             myElem = WebDriverWait(driver, 90).until(EC.presence_of_element_located((By.ID, 'event-name')))
         except:
-            websites['unsuccessful'].append("Global News")
+            websites["unsuccessful"].append("Global News")
             return
 
 
@@ -390,14 +389,14 @@ def globalNews(info):
                 postalCodeField.send_keys(postalCode)
 
         except:
-                websites['unsuccessful'].append("Global News")
+                websites["unsuccessful"].append("Global News")
         else:
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_id("event-organizer-name")
-                        websites['unsuccessful'].append("Global News")
+                        websites["unsuccessful"].append("Global News")
                 except NoSuchElementException:
-                        websites['successful'].append("Planet Friendly")
+                        websites["successful"].append("Planet Friendly")
 
 
 ##def kijiji(price,dateFrom,dateTo,title,description,postalCode,street,organizerPhone):
@@ -565,9 +564,9 @@ def metroVancouver(info):
                 emailField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_EMailField_ctl00_ctl00_TextField")
                 emailField.send_keys(email)
         except:
-         websites['unsuccessful'].append("Metro Vancouver")
+         websites["unsuccessful"].append("Metro Vancouver")
         else:
-         websites['captcha'].append("Metro Vancouver")
+         websites["captcha"].append("Metro Vancouver")
 
         
 
@@ -673,9 +672,9 @@ def cnv(info):
                 
         except Exception as e:
                 print(e)
-                websites['unsuccessful'].append("City of North Vancouver")
+                websites["unsuccessful"].append("City of North Vancouver")
         else:
-                websites['captcha'].append("City of North Vancouver") 
+                websites["captcha"].append("City of North Vancouver") 
 
 def ubyssey(info):
         driver.execute_script("window.open('https://www.ubyssey.ca/events/submit/form', 'new window')")
@@ -738,14 +737,14 @@ def ubyssey(info):
                 phoneField.send_keys(phone)
         except Exception as e:
               print(e)
-              websites['unsuccessful'].append("Ubyssey")
+              websites["unsuccessful"].append("Ubyssey")
         else:
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_id("id_ticket_url")
-                        websites['unsuccessful'].append("Ubyssey")
+                        websites["unsuccessful"].append("Ubyssey")
                 except NoSuchElementException:
-                        websites['successful'].append("Ubyssey")
+                        websites["successful"].append("Ubyssey")
 
 
 def northShore(info):
@@ -831,14 +830,14 @@ def northShore(info):
                 descriptionField.send_keys(description)
         except Exception as e:
               print(e)
-              websites['unsuccessful'].append("North Shore")
+              websites["unsuccessful"].append("North Shore")
         else:
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_id("eaa_custom6_0")
-                        websites['unsuccessful'].append("North Shore")
+                        websites["unsuccessful"].append("North Shore")
                 except:
-                        websites['successful'].append("North Shore")
+                        websites["successful"].append("North Shore")
 
         
 
@@ -900,14 +899,14 @@ def craigsList(info):
                 cityField.clear()
                 cityField.send_keys(city)
             except:
-             websites['unsuccessful'].append("Craigslist")
+             websites["unsuccessful"].append("Craigslist")
             else:
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_id("xstreet0")
-                        websites['unsuccessful'].append("Craigslist")
+                        websites["unsuccessful"].append("Craigslist")
                 except NoSuchElementException:
-                        websites['successful'].append("Craigslist")
+                        websites["successful"].append("Craigslist")
 
 def boredInVancouver(info):
 
@@ -947,14 +946,14 @@ def boredInVancouver(info):
                 nameField.send_keys(name)
 
         except:
-             websites['unsuccessful'].append("Bored In Vancouver")
+             websites["unsuccessful"].append("Bored In Vancouver")
         else:
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_id("g32-yourname")
-                        websites['unsuccessful'].append("Bored In Vancouver")
+                        websites["unsuccessful"].append("Bored In Vancouver")
                 except NoSuchElementException:
-                        websites['successful'].append("Bored In Vancouver")
+                        websites["successful"].append("Bored In Vancouver")
         
         
 def main():
@@ -964,7 +963,8 @@ def main():
         global info
         global handleCount
 
-        input = sys.argv[1]
+        #input = sys.argv[1]
+        input='{"event_contact_name":"1","event_contact_number":"1111111111","event_organizer_name":"1","event_organizer_email":"1@1","event_organizer_phone_number":"1111111111","event_title":"1","event_date_start":"June 6, 2018 6:25 AM","event_date_end":"September 27, 2018 6:55 PM","event_url":"1","event_fbURL":"1","event_age_group":"1","event_price":"1","event_ticketURL":"1","event_details":"1","event_venue":"1","event_street":"1","event_city":"1","event_postal_code":"1","event_websites":["Eventful","Youth Core"]}'
         info = json.loads(input)
 
 ##        f = open('C:/Users/Nadeem AbdelAziz/Desktop/Extracurriculars/sample.json', "r")
@@ -993,7 +993,7 @@ def main():
                 print(e)
                 pass
 
-        print(websites)
+        print(json.dumps(websites))
         sys.stdout.flush()
 
 
