@@ -5,7 +5,10 @@ Automatic Event Uploader for Stanley Park Ecology Society
 
 # What you need to install
 
-> Node.js
-> Python3
-> Selenium
-> Chrome
+* [Node.js](https://nodejs.org/en/)
+* [Python3](https://anaconda.org/anaconda/python)
+* [Selenium](https://pypi.org/project/selenium/)
+* [Chrome](https://www.google.com/chrome/)
+
+# How to start
+Double click on start.bat
