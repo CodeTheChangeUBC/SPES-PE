@@ -87,8 +87,8 @@ $(function() {
 
 function displayResults(data){
 	openNav();
-	
-	console.log(data)
+	console.log(data);
+	data = JSON.parse(data);
 	for(var i =0 ; i < data.successful.length ; i++ ){
 		$("#successful-web").prepend('<li class="li-items">'+data.successful[i]+"</li>");
 	} 

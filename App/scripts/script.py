@@ -13,15 +13,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 
-driver = webdriver.Chrome('C:/Users/kimoa/OneDrive/Desktop/final/SPES-PE/App/scripts/chromedriver.exe')
 
+driver = webdriver.Chrome('C:/Users/kimoa/OneDrive/Desktop/final/SPES-PE/App/scripts/chromedriver.exe')
+handleCount = 0
 username = "ctcstanley1@gmail.com"
 password = "codethechange"
 websites ={"successful":[],
            "captcha":[],
            "unsuccessful":[]
           }
-handleCount = 0
+
 
 def findnth(string, substring, n):
     parts = string.split(substring, n + 1)
@@ -30,7 +31,7 @@ def findnth(string, substring, n):
     return len(string) - len(parts[-1]) - len(substring)
 
 
-def eventful(info):
+def eventful(info,handleCount):
         title = info['event_title']
         date = info['event_date_start'][:findnth(info['event_date_start']," ",2)]
         startTime=info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
@@ -40,11 +41,8 @@ def eventful(info):
         facebookURL = info['event_fbURL']
         price = info['event_price']
         link = info['event_url']
-        global handleCount
-        handleCount +=1
-        driver.get('http://eventful.com/signin?goto=%2Fevents%2Fnew')
-
-##        driver.switch_to.window(driver.window_handles[handleCount])
+        driver.execute_script('''window.open("http://eventful.com/signin?goto=%2Fevents%2Fnew","_blank");''')
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         try: 
                 usernameField = driver.find_element_by_id("inp-username")
@@ -114,11 +112,9 @@ def eventful(info):
             websites["captcha"].append("Eventful")
         
 
-def youthCore(info):
-        
-        driver.execute_script("window.open('http://youthcore.ca/index.php?action=create_event', 'new window')")
-        print(driver.window_handles)
-        driver.switch_to.window(driver.window_handles[1])
+def youthCore(info,handleCount):
+        driver.execute_script('''window.open("http://youthcore.ca/index.php?action=create_event","_blank");''')
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         title = info['event_title']
         startTime=info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
@@ -173,10 +169,8 @@ def youthCore(info):
                 websites["captcha"].append("Youth Core")
 
 
-def planetFriendly(info):
-        driver.execute_script("window.open('http://planetfriendly.net/submit3.html', 'new window')")
-        global handleCount
-        handleCount+=1
+def planetFriendly(info,handleCount):
+        driver.execute_script('''window.open("http://planetfriendly.net/submit3.html","_blank");''')
         driver.switch_to.window(driver.window_handles[handleCount])
 
         title = info['event_title']
@@ -260,9 +254,9 @@ def planetFriendly(info):
                         websites["successful"].append("Planet Friendly")
 
 
-def globalNews(info):
-        driver.execute_script("window.open('https://globalnews.ca/bc/events/add/', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+def globalNews(info,handleCount):
+        driver.execute_script('''window.open("https://globalnews.ca/bc/events/add/","_blank");''')
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         title = info['event_title']
         venue=info['event_venue']
@@ -467,7 +461,7 @@ def globalNews(info):
 ##                        websites['successful'].append("Kijiji")
 
 
-def metroVancouver(info):
+def metroVancouver(info,handleCount):
         title = info['event_title']
         location=info['event_venue']
         description = info['event_details']
@@ -505,8 +499,8 @@ def metroVancouver(info):
         if endMinute == "5":
                 endMinute == "05"
         
-        driver.execute_script("window.open('http://www.metrovancouver.org/events/Pages/add-event.aspx', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+        driver.execute_script('''window.open("http://www.metrovancouver.org/events/Pages/add-event.aspx","_blank");''')
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         try:
                 myElem = WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.ID,
@@ -570,9 +564,10 @@ def metroVancouver(info):
 
         
 
-def cnv(info):
-        driver.execute_script("window.open('http://www.cnv.org/Parks-Recreation-and-Culture/Community-Events/Submit-an-Event', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+def cnv(info,handleCount):
+
+        driver.execute_script('''window.open("http://www.cnv.org/Parks-Recreation-and-Culture/Community-Events/Submit-an-Event","_blank");''')
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         title = info['event_title']
         description = info['event_details']
@@ -676,9 +671,10 @@ def cnv(info):
         else:
                 websites["captcha"].append("City of North Vancouver") 
 
-def ubyssey(info):
-        driver.execute_script("window.open('https://www.ubyssey.ca/events/submit/form', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+def ubyssey(info,handleCount):
+
+        driver.execute_script('''window.open("https://www.ubyssey.ca/events/submit/form","_blank");''')
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         title = info['event_title']
         location=info['event_venue']
@@ -747,9 +743,9 @@ def ubyssey(info):
                         websites["successful"].append("Ubyssey")
 
 
-def northShore(info):
-        driver.execute_script("window.open('http://www.nsnews.com/add-event', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+def northShore(info,handleCount):
+        driver.execute_script('''window.open("http://www.nsnews.com/add-event","_blank");''')
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         time.sleep(10)
         try:
@@ -841,10 +837,10 @@ def northShore(info):
 
         
 
-def craigsList(info):
+def craigsList(info,handleCount):
             try:
-                driver.execute_script("window.open('http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit', 'new window')")
-                driver.switch_to.window(driver.window_handles[1])
+                driver.execute_script('''window.open("http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit","_blank");''')
+                driver.switch_to.window(driver.window_handles[handleCount])
 
                 title = info['event_title']
                 venue=info['event_venue']
@@ -908,11 +904,11 @@ def craigsList(info):
                 except NoSuchElementException:
                         websites["successful"].append("Craigslist")
 
-def boredInVancouver(info):
+def boredInVancouver(info,handleCount):
 
         try:
-                driver.execute_script("window.open('http://boredinvancouver.com/contact-us/', 'new window')")
-                driver.switch_to.window(driver.window_handles[1])
+                driver.execute_script('''window.open("http://boredinvancouver.com/contact-us/","_blank");''')
+                driver.switch_to.window(driver.window_handles[handleCount])
                 
                 title = info['event_title']
                 venue= info['event_venue'] + ", " + info['event_date_start']+ ", " +info['event_price']
@@ -962,9 +958,10 @@ def main():
         global password
         global info
         global handleCount
-
-        #input = sys.argv[1]
-        input='{"event_contact_name":"1","event_contact_number":"1111111111","event_organizer_name":"1","event_organizer_email":"1@1","event_organizer_phone_number":"1111111111","event_title":"1","event_date_start":"June 6, 2018 6:25 AM","event_date_end":"September 27, 2018 6:55 PM","event_url":"1","event_fbURL":"1","event_age_group":"1","event_price":"1","event_ticketURL":"1","event_details":"1","event_venue":"1","event_street":"1","event_city":"1","event_postal_code":"1","event_websites":["Eventful","Youth Core"]}'
+            
+        
+        input = sys.stdin.readline()
+        #input='{"event_contact_name":"1","event_contact_number":"1111111111","event_organizer_name":"1","event_organizer_email":"1@1","event_organizer_phone_number":"1111111111","event_title":"1","event_date_start":"June 6, 2018 6:25 AM","event_date_end":"September 27, 2018 6:55 PM","event_url":"1","event_fbURL":"1","event_age_group":"1","event_price":"1","event_ticketURL":"1","event_details":"1","event_venue":"1","event_street":"1","event_city":"1","event_postal_code":"1","event_websites":["Eventful","Youth Core", "Global News"]}'
         info = json.loads(input)
 
 ##        f = open('C:/Users/Nadeem AbdelAziz/Desktop/Extracurriculars/sample.json', "r")
@@ -988,7 +985,8 @@ def main():
 
         for website in info['event_websites']:
             try:
-                functions[website](info)
+                handleCount+=1
+                functions[website](info,handleCount)
             except Exception as e:
                 print(e)
                 pass

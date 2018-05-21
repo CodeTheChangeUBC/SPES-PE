@@ -13,10 +13,12 @@ app.use(express.static(__dirname + '/views'));
 // library for running python script
 var PythonShell = require('python-shell');
 
+
 // home page
 app.get('/', function (req, res) {
 	res.sendFile('landing.html',  {"root": __dirname + '/views'});
 })
+
 
 // POST Request for form
 app.post('/form', function(req, res) {
@@ -32,11 +34,25 @@ app.post('/form', function(req, res) {
   }
 
   // Run python script
-  PythonShell.run('/scripts/mainScript.py', options, function (err, results) {
-  	if (err) throw err;
-  	var returnJSON = results[0];
-  	res.send(returnJSON);
+  var pyshell = new PythonShell('/scripts/script.py');
+
+  //Send request to py script
+  pyshell.send(req);
+
+  //Return results
+  pyshell.on('message', function (message) {
+    res.send(message);
   });
+
+  pyshell.end(function (err,code,signal) {
+    if (err) throw err;
+    console.log('The exit code was: ' + code);
+    console.log('The exit signal was: ' + signal);
+    console.log('finished');
+    console.log('finished');
+  });
+
+
 })
 
 // set port to localhost:8000
