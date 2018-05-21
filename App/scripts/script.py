@@ -1,4 +1,4 @@
-import sys
+import sys,os
 import time
 import json
 import getpass
@@ -14,7 +14,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 
 
+
 driver = webdriver.Chrome('C:/Users/kimoa/OneDrive/Desktop/final/SPES-PE/App/scripts/chromedriver.exe')
+
 handleCount = 0
 username = "ctcstanley1@gmail.com"
 password = "codethechange"
@@ -666,7 +668,6 @@ def cnv(info,handleCount):
 ##                submit.click()
                 
         except Exception as e:
-                print(e)
                 websites["unsuccessful"].append("City of North Vancouver")
         else:
                 websites["captcha"].append("City of North Vancouver") 
@@ -732,7 +733,6 @@ def ubyssey(info,handleCount):
                 phoneField.clear()
                 phoneField.send_keys(phone)
         except Exception as e:
-              print(e)
               websites["unsuccessful"].append("Ubyssey")
         else:
                 try:
@@ -751,7 +751,7 @@ def northShore(info,handleCount):
         try:
             driver.switch_to.frame("trumbaSubmitEventForm")
         except Exception as e:
-            print(e)
+            pass
 
         title = info['event_title']
         description = info['event_details']
@@ -825,7 +825,6 @@ def northShore(info,handleCount):
                 descriptionField.clear()
                 descriptionField.send_keys(description)
         except Exception as e:
-              print(e)
               websites["unsuccessful"].append("North Shore")
         else:
                 try:
@@ -958,9 +957,8 @@ def main():
         global password
         global info
         global handleCount
-            
         
-        input = sys.stdin.readline()
+        input = sys.argv[1]
         #input='{"event_contact_name":"1","event_contact_number":"1111111111","event_organizer_name":"1","event_organizer_email":"1@1","event_organizer_phone_number":"1111111111","event_title":"1","event_date_start":"June 6, 2018 6:25 AM","event_date_end":"September 27, 2018 6:55 PM","event_url":"1","event_fbURL":"1","event_age_group":"1","event_price":"1","event_ticketURL":"1","event_details":"1","event_venue":"1","event_street":"1","event_city":"1","event_postal_code":"1","event_websites":["Eventful","Youth Core", "Global News"]}'
         info = json.loads(input)
 
@@ -988,11 +986,14 @@ def main():
                 handleCount+=1
                 functions[website](info,handleCount)
             except Exception as e:
-                print(e)
                 pass
 
+
+
+        sys.stdout.flush()
         print(json.dumps(websites))
         sys.stdout.flush()
+        quit()
 
 
 if __name__ == "__main__":

@@ -27,30 +27,28 @@ app.post('/form', function(req, res) {
   var data = JSON.stringify(req.body);
   console.log(data);
 
-  // Set options for python script call
-  var options = {
-  	mode: 'json',
-  	args: [data]
-  }
+// Set options for python script call
+var options = {
+  mode: 'json',
+  args: [data]
+}
 
-  // Run python script
-  var pyshell = new PythonShell('/scripts/script.py');
 
-  //Send request to py script
-  pyshell.send(req);
+var pyshell = new PythonShell('scripts/script.py',options);
+ 
 
-  //Return results
-  pyshell.on('message', function (message) {
-    res.send(message);
-  });
-
-  pyshell.end(function (err,code,signal) {
-    if (err) throw err;
-    console.log('The exit code was: ' + code);
-    console.log('The exit signal was: ' + signal);
-    console.log('finished');
-    console.log('finished');
-  });
+pyshell.on('message', function (message) {
+  res.send(message);
+});
+ 
+// end the input stream and allow the process to exit
+pyshell.end(function (err,code,signal) {
+  if (err) throw err;
+  console.log('The exit code was: ' + code);
+  console.log('The exit signal was: ' + signal);
+  console.log('finished');
+  console.log('finished');
+});
 
 
 })
@@ -66,3 +64,5 @@ app.listen(8000, function () {
 	console.log('\n                                         Server has sucessfully Started!');
 	console.log('\n                             Quitting this window , forcibly shuts down the server');
 })
+
+

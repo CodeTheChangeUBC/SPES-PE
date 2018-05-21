@@ -86,9 +86,15 @@ $(function() {
 });
 
 function displayResults(data){
+	
 	openNav();
 	console.log(data);
-	data = JSON.parse(data);
+
+	//Clear list from previous entries 
+	document.getElementById("successful-web").innerHTML = "";
+	document.getElementById("captcha-web").innerHTML = "";
+	document.getElementById("unsuccessful-web").innerHTML = "";
+
 	for(var i =0 ; i < data.successful.length ; i++ ){
 		$("#successful-web").prepend('<li class="li-items">'+data.successful[i]+"</li>");
 	} 
