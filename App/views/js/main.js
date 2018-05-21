@@ -18,12 +18,6 @@ $('#calender2').calendar({
 $('#phone').mask('(000) 000-0000');
 $('#contact-p').mask('(000) 000-0000');
 $('#pcode').mask('AA AAA-AAA');
-$('#url').keyup(function () {
-	if (  ($(this).val().length >5) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
-		$(this).val('http://' + $(this).val());
-	}
-});
-
 $('#eurl').keyup(function () {
 	if (  ($(this).val().length >5) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
 		$(this).val('http://' + $(this).val());
@@ -101,7 +95,7 @@ $(function() {
 			submitForm(form);
 		}
 		catch(err){
-			window.location.replace('error.html');
+			window.location.replace('views/error.html');
 		}
 	});
 

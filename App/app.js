@@ -27,6 +27,7 @@ app.get('/', function (req, res) {
 	res.sendFile('landing.html',  {"root": __dirname + '/views'});
 })
 
+
 // POST Request for form
 app.post('/form', function(req, res) {
 
@@ -42,7 +43,7 @@ app.post('/form', function(req, res) {
 	var pyshell = new PythonShell('scripts/script.py',options);
 
 	pyshell.on('message', function (message) {
-    console.log('messege: '+message);
+		console.log('messege: '+message);
 		res.send(message);
 	});
 
