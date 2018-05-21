@@ -18,11 +18,34 @@ $('#calender2').calendar({
 $('#phone').mask('(000) 000-0000');
 $('#contact-p').mask('(000) 000-0000');
 $('#pcode').mask('AA AAA-AAA');
+$('#url').keyup(function () {
+	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+		$(this).val('http://' + $(this).val());
+	}
+});
+
+$('#eurl').keyup(function () {
+	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+		$(this).val('http://' + $(this).val());
+	}
+});
+
+$('#furl').keyup(function () {
+	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+		$(this).val('http://' + $(this).val());
+	}
+});
+
+$('#turl').keyup(function () {
+	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+		$(this).val('http://' + $(this).val());
+	}
+});
 ////////////////////////////
 
 //Text Area/////////////////
 function limitWords(id) {
-	var maxWords=3;
+	var maxWords=50;
 	var d=document.getElementById(id);
 	if ( d.value.split(' ').length > maxWords ) {
 		$('#details').css('background-color','#ffd6d6');
@@ -69,18 +92,17 @@ $('.chips-placeholder').material_chip({
 $(function() {
 	$("#formSubmit").click(function() {
 		var form = $("#dataForm").serializeJSON();
-		var tag= $('.chips-placeholder').material_chip('data');
-		var tagArr = [];
-		for (var i = 0; i < tag.length; i++) {
-			tagArr.push(tag[i].tag);
-		}
-		form["event_tags"] = tagArr ;
 
 		form["event_organizer_phone_number"]=$('#phone').cleanVal();
 		form["event_contact_number"]=$('#contact-p').cleanVal();
 		form["event_postal_code"]=$('#pcode').cleanVal();
 
-		submitForm(form);
+		try{
+			submitForm(form);
+		}
+		catch(err){
+			window.location.replace('error.html');
+		}
 	});
 
 });
@@ -99,11 +121,6 @@ function displayResults(data){
 		$("#successful-web").prepend('<li class="li-items">'+data.successful[i]+"</li>");
 	} 
 
-	for(var i =0 ; i < data.captcha.length ; i++ ){
-		$("#captcha-web").prepend('<li class="li-items">'+data.captcha[i]+"</li>");
-	} 
-
-
 	for(var i =0 ; i < data.unsuccessful.length ; i++ ){
 		$("#unsuccessful-web").prepend('<li class="li-items">'+data.unsuccessful[i]+"</li>");
 	} 
@@ -119,7 +136,7 @@ function submitForm(formData){
 			data: formData,
 			url: 'http://localhost:8000/form', 
 			error:function(){
-				//error
+				window.location.replace('error.html');
 			},                     
 			success: function(data) {
 				unloadScreen();
