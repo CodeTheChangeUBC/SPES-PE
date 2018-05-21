@@ -14,7 +14,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 
 
-driver = webdriver.Firefox()
+driver = webdriver.Chrome()
 username = "ctcstanley1@gmail.com"
 password = "codethechange"
 websites ={'successful':[],
@@ -39,9 +39,9 @@ def eventful(info):
         facebookURL = info['event_fbURL']
         price = info['event_price']
         link = info['event_url']
-        
+
         driver.get('http://eventful.com/signin?goto=%2Fevents%2Fnew')
-        try: 
+        try:
                 usernameField = driver.find_element_by_id("inp-username")
                 usernameField.send_keys(username)
                 passwordField = driver.find_element_by_id("inp-password")
@@ -57,7 +57,7 @@ def eventful(info):
             websites['unsuccessful'].append("Eventful")
             return
 
-        try:    
+        try:
            titleField = driver.find_element_by_id("inp-title")
            titleField.clear()
            titleField.send_keys(title)
@@ -86,7 +86,7 @@ def eventful(info):
            descriptionField.clear()
            descriptionField.send_keys(description)
 
-           
+
            clickField = driver.find_element_by_id("click-more-options")
            clickField.click()
            priceField = driver.find_element_by_id("inp-price")
@@ -107,7 +107,7 @@ def eventful(info):
             websites['unsuccessful'].append("Eventful")
         else:
             websites['captcha'].append("Eventful")
-        
+
 
 def youthCore(info):
         driver.execute_script("window.open('http://youthcore.ca/index.php?action=create_event', 'new window')")
@@ -129,7 +129,7 @@ def youthCore(info):
             websites['unsuccessful'].append("Youth Core")
             return
 
-        
+
         try:
                 nameField = driver.find_element_by_id("submitter_name")
                 nameField.send_keys(name)
@@ -179,8 +179,8 @@ def planetFriendly(info):
                 startMonth = startMonth[:4]
         else:
                 startMonth = startMonth[:3]
-                
-        
+
+
         startYear = info['event_date_end'][findnth(info['event_date_start']," ",1)+1:findnth(info['event_date_start']," ",1)+5]
         description = info['event_details']
         city = info['event_city']
@@ -188,7 +188,7 @@ def planetFriendly(info):
         contactEmail = info['event_organizer_email']
         contactPhone = info['event_organizer_phone_number']
         contactWeb = info['event_url']
-        
+
 
 
         try:
@@ -260,7 +260,7 @@ def globalNews(info):
         venue=info['event_venue']
         description = info['event_details']
         age = info['event_age_group']
-        
+
         startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start']," ",0)+2]
         startMonth=info['event_date_start'][:findnth(info['event_date_start']," ",0)]
         startYear = info['event_date_start'][findnth(info['event_date_start']," ",1)+1:findnth(info['event_date_start']," ",1)+5]
@@ -268,7 +268,7 @@ def globalNews(info):
         startHour = info['event_date_start'][findnth(info['event_date_start']," ",2)+1:findnth(info['event_date_start']," ",2)+2]
         startMinute=info['event_date_start'][findnth(info['event_date_start'],":",0)+1:findnth(info['event_date_start'],":",0)+3]
         startMinute = str(int(startMinute) - int(startMinute)%15)
-        startAM=info['event_date_start'][findnth(info['event_date_start'],":",0)+4:findnth(info['event_date_start'],":",0)+6]        
+        startAM=info['event_date_start'][findnth(info['event_date_start'],":",0)+4:findnth(info['event_date_start'],":",0)+6]
 
         endDate = info['event_date_end'][findnth(info['event_date_end']," ",0)+1:findnth(info['event_date_end']," ",0)+2]
         endMonth=info['event_date_end'][:findnth(info['event_date_end']," ",0)]
@@ -277,9 +277,9 @@ def globalNews(info):
         endHour = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:findnth(info['event_date_end']," ",2)+2]
         endMinute=info['event_date_end'][findnth(info['event_date_end'],":",0)+1:findnth(info['event_date_end'],":",0)+3]
         endMinute = str(int(endMinute) - int(endMinute)%15)
-        endAM=info['event_date_end'][findnth(info['event_date_end'],":",0)+4:findnth(info['event_date_end'],":",0)+6]        
+        endAM=info['event_date_end'][findnth(info['event_date_end'],":",0)+4:findnth(info['event_date_end'],":",0)+6]
 
-        
+
         city = info['event_city']
         street = info['event_street']
         organizerName = info['event_organizer_name']
@@ -289,7 +289,7 @@ def globalNews(info):
         postalCode = info['event_postal_code']
 ##        ticketURL = info['event_ticketURL']
 
-        
+
         try:
             myElem = WebDriverWait(driver, 90).until(EC.presence_of_element_located((By.ID, 'event-name')))
         except Exception as e:
@@ -344,7 +344,7 @@ def globalNews(info):
 
                 startYearField = Select(driver.find_element_by_name("event-year-start"))
                 startYearField.select_by_visible_text(startYear)
-                
+
                 venueField = driver.find_element_by_id("event-venue")
                 venueField.send_keys(venue)
 
@@ -374,7 +374,7 @@ def globalNews(info):
 
                 websiteField = driver.find_element_by_id("event-website")
                 websiteField.send_keys(eventURL)
-        
+
                 ticketField = driver.find_element_by_id("event-tickets")
                 ticketField.send_keys(ticketURL)
 
@@ -397,11 +397,11 @@ def globalNews(info):
 ####        driver.execute_script("window.open('https://www.kijiji.ca/t-login.html?targetUrl=L3Atc2VsZWN0LWNhdGVnb3J5Lmh0bWw/Y2F0ZWdvcnlJZD0yODkmdXNlclJlZ2lzdGVyZWQ9dHJ1ZV54Tk1KeU9ySTA5U0Z3MDdzS213OC93PT0',
 ####                              'new window')")
 ##
-##        try: 
+##        try:
 ##                usernameField = driver.find_element_by_id("LoginEmailOrNickname")
 ##        except NoSuchElementException:
 ##                print('Username field ID changed')
-##                
+##
 ##        usernameField.send_keys(username)
 ##
 ##        try:
@@ -426,13 +426,13 @@ def globalNews(info):
 ##
 ##        form = driver.find_element_by_id("PageSelect")
 ##        form.click()
-##        try: 
+##        try:
 ##                priceField = driver.find_element_by_id("PriceAmount")
 ##                priceField.send_keys(price)
 ##
 ##                dateField = driver.find_element_by_id("SelectDate")
 ##                dateField.send_keys(dateFrom)
-##                
+##
 ##                dateToField = driver.find_element_by_id("SelectDateTo")
 ##                dateToField.send_keys(dateTo)
 ##
@@ -491,14 +491,14 @@ def metroVancouver(info):
                 startMinute == "05"
 
         endHour = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:findnth(info['event_date_end']," ",2)+2]
-        endAM=info['event_date_end'][findnth(info['event_date_end'],":",0)+4:findnth(info['event_date_end'],":",0)+6]        
+        endAM=info['event_date_end'][findnth(info['event_date_end'],":",0)+4:findnth(info['event_date_end'],":",0)+6]
         endHour = endHour + " " + endAM
-        
+
         endMinute=info['event_date_end'][findnth(info['event_date_end'],":",0)+1:findnth(info['event_date_end'],":",0)+3]
         endMinute = str(int(endMinute) - int(endMinute)%5)
         if endMinute == "5":
                 endMinute == "05"
-        
+
         driver.execute_script("window.open('http://www.metrovancouver.org/events/Pages/add-event.aspx', 'new window')")
         driver.switch_to.window(driver.window_handles[1])
         try:
@@ -514,14 +514,14 @@ def metroVancouver(info):
 ##                WebDriverWait(driver, 60).until_not(EC.visibility_of_element_located((By.ID, "ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_EndDateField_ctl00_ctl00_DateTimeField_DateTimeFieldDate")))
 ##                endDateField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_EndDateField_ctl00_ctl00_DateTimeField_DateTimeFieldDate")
 ##                endDateField.send_keys(endDate)
-##                
+##
 ##                WebDriverWait(driver, 60).until_not(EC.visibility_of_element_located((By.ID, "ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_StartDateField_ctl00_ctl00_DateTimeField_DateTimeFieldDate")))
 ##                startDateField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_StartDateField_ctl00_ctl00_DateTimeField_DateTimeFieldDate")
 ##                startDateField.send_keys(startDate)
 
 ##                startHourField = Select(driver.find_element_by_name("ctl00$ctl35$g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718$StartDateField$ctl00$ctl00$DateTimeField$DateTimeFieldDateHours"))
 ##                startHourField.select_by_visible_text(startHour)
-##                      
+##
 ##                startMinuteField = Select(driver.find_element_by_name("ctl00$ctl35$g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718$StartDateField$ctl00$ctl00$DateTimeField$DateTimeFieldDateMinutes"))
 ##                startMinuteField.select_by_visible_text(startMinute)
 
@@ -545,7 +545,7 @@ def metroVancouver(info):
 
                 endDateField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_StartDateField_ctl00_ctl00_DateTimeField_DateTimeFieldDate")
                 endDateField.send_keys(endDate)
-                
+
                 firstNameField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_FirstNameField_ctl00_ctl00_TextField")
                 firstNameField.send_keys(organizerName)
 
@@ -563,7 +563,7 @@ def metroVancouver(info):
         else:
          websites['captcha'].append("Metro Vancouver")
 
-        
+
 
 def cnv(info):
         driver.execute_script("window.open('http://www.cnv.org/Parks-Recreation-and-Culture/Community-Events/Submit-an-Event', 'new window')")
@@ -584,19 +584,19 @@ def cnv(info):
         startHour = info['event_date_start'][findnth(info['event_date_start']," ",2)+1:findnth(info['event_date_start']," ",2)+2]
         startMinute=info['event_date_start'][findnth(info['event_date_start'],":",0)+1:findnth(info['event_date_start'],":",0)+3]
         startMinute = str(int(startMinute) - int(startMinute)%15)
-        startAM=info['event_date_start'][findnth(info['event_date_start'],":",0)+4:findnth(info['event_date_start'],":",0)+6]        
+        startAM=info['event_date_start'][findnth(info['event_date_start'],":",0)+4:findnth(info['event_date_start'],":",0)+6]
 
         endHour = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:findnth(info['event_date_end']," ",2)+2]
         endMinute=info['event_date_end'][findnth(info['event_date_end'],":",0)+1:findnth(info['event_date_end'],":",0)+3]
         endMinute = str(int(endMinute) - int(endMinute)%15)
-        endAM=info['event_date_end'][findnth(info['event_date_end'],":",0)+4:findnth(info['event_date_end'],":",0)+6]        
+        endAM=info['event_date_end'][findnth(info['event_date_end'],":",0)+4:findnth(info['event_date_end'],":",0)+6]
 
 
 
         driver.implicitly_wait(10)
         driver.switch_to.frame("trumbaSubmitEventForm")
 
-        try:    
+        try:
                 submitterNameField = driver.find_element_by_id("eaa_TextboxName")
                 submitterNameField.clear()
                 submitterNameField.send_keys(name)
@@ -663,12 +663,12 @@ def cnv(info):
 
 ##                submit = driver.find_element_by_id("eaa_buttonSubmit")
 ##                submit.click()
-                
+
         except Exception as e:
                 print(e)
                 websites['unsuccessful'].append("City of North Vancouver")
         else:
-                websites['captcha'].append("City of North Vancouver") 
+                websites['captcha'].append("City of North Vancouver")
 
 def ubyssey(info):
         driver.execute_script("window.open('https://www.ubyssey.ca/events/submit/form', 'new window')")
@@ -689,7 +689,7 @@ def ubyssey(info):
         except TimeoutException:
             print("Loading took too much time!")
             driver.quit()
-        try:     
+        try:
                 titleField = driver.find_element_by_id("id_title")
                 titleField.clear()
                 titleField.send_keys(title)
@@ -790,7 +790,7 @@ def northShore(info):
 
                 locationField = driver.find_element_by_id("eaa_TextboxLocation")
                 locationField.send_keys(venue)
-                
+
                 descriptionField = driver.find_element_by_name("eaa$custom4_0")
                 descriptionField.clear()
                 descriptionField.send_keys(description)
@@ -833,7 +833,7 @@ def northShore(info):
                 except:
                         websites['successful'].append("North Shore")
 
-        
+
 
 def craigsList(info):
         driver.execute_script("window.open('http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit', 'new window')")
@@ -910,10 +910,10 @@ def craigsList(info):
 def boredInVancouver(info):
         driver.execute_script("window.open('http://boredinvancouver.com/contact-us/', 'new window')")
         driver.switch_to.window(driver.window_handles[1])
-        
+
         title = info['event_title']
         venue= info['event_venue'] + info['event_date_start']+ info['event_price']
-        description = info['event_details'] 
+        description = info['event_details']
         name = info['event_organizer_name']
         email = info['event_organizer_email']
         url = info['event_url']
@@ -952,8 +952,8 @@ def boredInVancouver(info):
                         websites['unsuccessful'].append("Bored In Vancouver")
                 except NoSuchElementException:
                         websites['successful'].append("Bored In Vancouver")
-        
-        
+
+
 def main():
         global driver
         global username

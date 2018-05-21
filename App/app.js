@@ -13,44 +13,49 @@ app.use(express.static(__dirname + '/views'));
 // library for running python script
 var PythonShell = require('python-shell');
 
+// library for logging errors, added with time stamp
+const SimpleNodeLogger = require('simple-node-logger'),
+opts = {
+	logFilePath:'errorLog.log',
+	timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+},
+log = SimpleNodeLogger.createSimpleLogger(opts);
+log.setLevel('warn');
 
 // home page
 app.get('/', function (req, res) {
 	res.sendFile('landing.html',  {"root": __dirname + '/views'});
 })
 
-
 // POST Request for form
 app.post('/form', function(req, res) {
 
-  // get data from form
-  var data = JSON.stringify(req.body);
-  console.log(data);
+	// get data from form
+	var data = JSON.stringify(req.body);
 
-// Set options for python script call
-var options = {
-  mode: 'json',
-  args: [data]
-}
+	// Set options for python script call
+	var options = {
+		mode: 'json',
+		args: [data]
+	}
 
+	var pyshell = new PythonShell('scripts/script.py',options);
 
-var pyshell = new PythonShell('scripts/script.py',options);
- 
+	pyshell.on('message', function (message) {
+		res.send(message);
+	});
 
-pyshell.on('message', function (message) {
-  res.send(message);
-});
- 
-// end the input stream and allow the process to exit
-pyshell.end(function (err,code,signal) {
-  if (err) throw err;
-  console.log('The exit code was: ' + code);
-  console.log('The exit signal was: ' + signal);
-  console.log('finished');
-  console.log('finished');
-});
-
-
+	// end the input stream and allow the process to exit
+	pyshell.end(function (err,code,signal) {
+		if (err) {
+			log.error(err + '\n');
+			throw err;
+		}
+		console.log('The exit code was: ' + code);
+		console.log('The exit signal was: ' + signal);
+		console.log('finished');
+		console.log('finished');
+	});
 })
 
 // set port to localhost:8000
@@ -64,5 +69,3 @@ app.listen(8000, function () {
 	console.log('\n                                         Server has sucessfully Started!');
 	console.log('\n                             Quitting this window , forcibly shuts down the server');
 })
-
-
