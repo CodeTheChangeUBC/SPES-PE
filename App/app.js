@@ -42,6 +42,7 @@ app.post('/form', function(req, res) {
 	var pyshell = new PythonShell('scripts/script.py',options);
 
 	pyshell.on('message', function (message) {
+    console.log('messege: '+message);
 		res.send(message);
 	});
 
@@ -49,7 +50,7 @@ app.post('/form', function(req, res) {
 	pyshell.end(function (err,code,signal) {
 		if (err) {
 			log.error(err + '\n');
-			res.redirect("error.html");
+			res.redirect("views/error.html");
 		}
 		console.log('The exit code was: ' + code);
 		console.log('The exit signal was: ' + signal);

@@ -1,4 +1,4 @@
-import sys
+import sys,os
 import time
 import json
 import getpass
@@ -14,7 +14,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 
 
-driver = webdriver.Chrome(r'chromedriver.exe')
+driver = webdriver.Chrome(os.path.dirname(os.path.abspath(__file__))+'\\chromedriver.exe')
 handleCount = 0
 username = "ctcstanley1@gmail.com"
 password = "codethechange"
@@ -38,12 +38,12 @@ def eventful(info,handleCount):
            startTime=info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
            endTime = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:]
            venue=info['event_venue']
-           description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + \
-                         "Age group:" + info['event_age_group']+"\n" + info['event_organizer_name'] + ", " + info['event_organizer_email'] + ", " + info['event_organizer_phone_number']
+           description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + "Age group:" + info['event_age_group']+"\n" + info['event_organizer_name'] + ", " + info['event_organizer_email'] + ", " + info['event_organizer_phone_number']
            facebookURL = info['event_fbURL']
            price = info['event_price']
            link = info['event_url']
            category = info['event_category1']
+
            driver.execute_script('''window.open("http://eventful.com/signin?goto=%2Fevents%2Fnew","_blank");''')
            driver.switch_to.window(driver.window_handles[handleCount])
 
@@ -1001,15 +1001,14 @@ def main():
         global password
         global info
         global handleCount
-            
         
-##        input = sys.stdin.readline()
-##        #input='{"event_contact_name":"1","event_contact_number":"1111111111","event_organizer_name":"1","event_organizer_email":"1@1","event_organizer_phone_number":"1111111111","event_title":"1","event_date_start":"June 6, 2018 6:25 AM","event_date_end":"September 27, 2018 6:55 PM","event_url":"1","event_fbURL":"1","event_age_group":"1","event_price":"1","event_ticketURL":"1","event_details":"1","event_venue":"1","event_street":"1","event_city":"1","event_postal_code":"1","event_websites":["Eventful","Youth Core", "Global News"]}'
-##        info = json.loads(input)
+        input = sys.argv[1]
+        #input='{"event_contact_name":"1","event_contact_number":"1111111111","event_organizer_name":"1","event_organizer_email":"1@1","event_organizer_phone_number":"1111111111","event_title":"1","event_date_start":"June 6, 2018 6:25 AM","event_date_end":"September 27, 2018 6:55 PM","event_url":"1","event_fbURL":"1","event_age_group":"1","event_price":"1","event_ticketURL":"1","event_details":"1","event_venue":"1","event_street":"1","event_city":"1","event_postal_code":"1","event_websites":["Eventful","Youth Core", "Global News"]}'
+        info = json.loads(input)
 
-        f = open('C:/Users/Nadeem AbdelAziz/Desktop/Extracurriculars/sample.json', "r")
-        s = f.read()
-        info = json.loads(s)
+##        f = open('C:/Users/Nadeem AbdelAziz/Desktop/Extracurriculars/sample.json', "r")
+##        s = f.read()
+##        info = json.loads(s)
 
 
         functions = {
@@ -1031,11 +1030,14 @@ def main():
                 handleCount+=1
                 functions[website](info,handleCount)
             except Exception as e:
-                print(e)
                 pass
 
+
+        sys.stdout.flush()
         print(json.dumps(websites))
         sys.stdout.flush()
+        quit()
+
 
 
 if __name__ == "__main__":

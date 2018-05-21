@@ -1,1 +1,5 @@
 
+2018-05-22 00:51:01.328 ERROR Error: selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home
+ 
+2018-05-22 00:52:05.011 ERROR Error: NameError: name 'os' is not defined
+ 

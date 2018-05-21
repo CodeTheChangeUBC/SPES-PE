@@ -4,12 +4,12 @@ var today = new Date();
 
 $('#calender1').calendar({
 	startMode: 'month',
-	minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1),
+	minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
 });
 
 $('#calender2').calendar({
 	startMode: 'month',
-	minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1),
+	minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
 });
 /////////////////////////
 
@@ -19,25 +19,25 @@ $('#phone').mask('(000) 000-0000');
 $('#contact-p').mask('(000) 000-0000');
 $('#pcode').mask('AA AAA-AAA');
 $('#url').keyup(function () {
-	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+	if (  ($(this).val().length >5) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
 		$(this).val('http://' + $(this).val());
 	}
 });
 
 $('#eurl').keyup(function () {
-	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+	if (  ($(this).val().length >5) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
 		$(this).val('http://' + $(this).val());
 	}
 });
 
 $('#furl').keyup(function () {
-	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+	if (  ($(this).val().length >5) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
 		$(this).val('http://' + $(this).val());
 	}
 });
 
 $('#turl').keyup(function () {
-	if (  ($(this).val().length >0) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
+	if (  ($(this).val().length >5) && ($(this).val().substr(0, 5) != 'http:') && ($(this).val().substr(0, 5) != 'https') ) {
 		$(this).val('http://' + $(this).val());
 	}
 });
@@ -114,7 +114,6 @@ function displayResults(data){
 
 	//Clear list from previous entries 
 	document.getElementById("successful-web").innerHTML = "";
-	document.getElementById("captcha-web").innerHTML = "";
 	document.getElementById("unsuccessful-web").innerHTML = "";
 
 	for(var i =0 ; i < data.successful.length ; i++ ){
@@ -136,7 +135,7 @@ function submitForm(formData){
 			data: formData,
 			url: 'http://localhost:8000/form', 
 			error:function(){
-				window.location.replace('error.html');
+				window.location.replace('../error.html');
 			},                     
 			success: function(data) {
 				unloadScreen();
