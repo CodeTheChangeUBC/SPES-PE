@@ -13,7 +13,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 
-driver = webdriver.Chrome(r'C:\Users\Nadeem AbdelAziz\Desktop\Extracurriculars\chromedriver_win32\chromedriver.exe')
+driver = webdriver.Chrome(r'chromedriver.exe')
 
 username = "ctcstanley1@gmail.com"
 password = "codethechange"
@@ -21,6 +21,7 @@ websites ={'successful':[],
            'captcha':[],
            'unsuccessful':[]
           }
+handleCount = 0
 
 def findnth(string, substring, n):
     parts = string.split(substring, n + 1)
@@ -39,8 +40,11 @@ def eventful(info):
         facebookURL = info['event_fbURL']
         price = info['event_price']
         link = info['event_url']
-        
+        global handleCount
+        handleCount +=1
         driver.get('http://eventful.com/signin?goto=%2Fevents%2Fnew')
+
+##        driver.switch_to.window(driver.window_handles[handleCount])
 
         try: 
                 usernameField = driver.find_element_by_id("inp-username")
@@ -112,7 +116,10 @@ def eventful(info):
 
 def youthCore(info):
         driver.execute_script("window.open('http://youthcore.ca/index.php?action=create_event', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+##        global handleCount
+##        handleCount+=1
+##        driver.switch_to.window(driver.window_handles[handleCount])
+        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"\t");
 
         title = info['event_title']
         startTime=info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
@@ -169,7 +176,9 @@ def youthCore(info):
 
 def planetFriendly(info):
         driver.execute_script("window.open('http://planetfriendly.net/submit3.html', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+        global handleCount
+        handleCount+=1
+        driver.switch_to.window(driver.window_handles[handleCount])
 
         title = info['event_title']
         s = info['event_date_start'][:findnth(info['event_date_start']," ",2)]
@@ -505,7 +514,6 @@ def metroVancouver(info):
                                                                                          'ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_CommentsField_ctl00_ctl00_TextField')))
                 endHourField = Select(driver.find_element_by_name("ctl00$ctl35$g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718$EndDateField$ctl00$ctl00$DateTimeField$DateTimeFieldDateHours"))
                 endHourField.select_by_visible_text(endHour)
-                print("1")
 
                 endMinuteField = Select(driver.find_element_by_name("ctl00$ctl35$g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718$EndDateField$ctl00$ctl00$DateTimeField$DateTimeFieldDateMinutes"))
                 endMinuteField.select_by_visible_text(endMinute)
@@ -835,21 +843,20 @@ def northShore(info):
         
 
 def craigsList(info):
-        driver.execute_script("window.open('http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
+            try:
+                driver.execute_script("window.open('http://post.craigslist.org/k/6LCtjvRV6BGHSA6-sDz7FA/5ViVw?lang=en&cc=us&s=edit', 'new window')")
+                driver.switch_to.window(driver.window_handles[1])
 
-        title = info['event_title']
-        venue=info['event_venue']
-        description = info['event_details']
-        city = info['event_city']
-        street = info['event_street']
-        name = info['event_organizer_name']
-        email = info['event_organizer_email']
-        phone = info['event_organizer_phone_number']
-        postalCode = info['event_postal_code']
+                title = info['event_title']
+                venue=info['event_venue']
+                description = info['event_details']
+                city = info['event_city']
+                street = info['event_street']
+                name = info['event_organizer_name']
+                email = info['event_organizer_email']
+                phone = info['event_organizer_phone_number']
+                postalCode = info['event_postal_code']
 
-
-        try:
                 myElem = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'PostingTitle')))
                 titleField = driver.find_element_by_id("PostingTitle")
                 titleField.clear()
@@ -892,9 +899,9 @@ def craigsList(info):
                 cityField = driver.find_element_by_id('city')
                 cityField.clear()
                 cityField.send_keys(city)
-        except:
+            except:
              websites['unsuccessful'].append("Craigslist")
-        else:
+            else:
                 try:
                         driver.implicitly_wait(10)
                         driver.find_element_by_id("xstreet0")
@@ -903,17 +910,18 @@ def craigsList(info):
                         websites['successful'].append("Craigslist")
 
 def boredInVancouver(info):
-        driver.execute_script("window.open('http://boredinvancouver.com/contact-us/', 'new window')")
-        driver.switch_to.window(driver.window_handles[1])
-        
-        title = info['event_title']
-        venue= info['event_venue'] + ", " + info['event_date_start']+ ", " +info['event_price']
-        description = info['event_details'] 
-        name = info['event_organizer_name']
-        email = info['event_organizer_email']
-        url = info['event_url']
 
         try:
+                driver.execute_script("window.open('http://boredinvancouver.com/contact-us/', 'new window')")
+                driver.switch_to.window(driver.window_handles[1])
+                
+                title = info['event_title']
+                venue= info['event_venue'] + ", " + info['event_date_start']+ ", " +info['event_price']
+                description = info['event_details'] 
+                name = info['event_organizer_name']
+                email = info['event_organizer_email']
+                url = info['event_url']
+
                 driver.implicitly_wait(10)
                 titleField = driver.find_element_by_id("g32-nameoflisting")
                 titleField.clear()
@@ -954,10 +962,11 @@ def main():
         global username
         global password
         global info
+        global handleCount
 
         input = sys.argv[1]
         info = json.loads(input)
-##
+
 ##        f = open('C:/Users/Nadeem AbdelAziz/Desktop/Extracurriculars/sample.json', "r")
 ##        s = f.read()
 ##        info = json.loads(s)
@@ -980,7 +989,8 @@ def main():
         for website in info['event_websites']:
             try:
                 functions[website](info)
-            except Exception:
+            except Exception as e:
+                print(e)
                 pass
 
         print(websites)
