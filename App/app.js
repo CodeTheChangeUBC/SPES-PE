@@ -45,7 +45,7 @@ app.listen(8000, function () {
 	console.log('                                                  Code the Change UBC ')
 	console.log('\n                   Website: https://codethechangeubc.org  ~  Email: codethechangeubc@gmail.com')
 	console.log('\n                                                     Developers:\n')
-	console.log('                               Karim Eldegwy, Ahmed Abdelmoniem, Nadeem Abdulaziz ,Seif Ghazi\n')
+	console.log('                               Karim Eldegwy, Ahmed Abdelmoniem, Nadim Abdelaziz ,Seif Ghazi\n')
 	console.log('                                  ================================================\n')
 	console.log('\n                                         Server has sucessfully Started!');
 	console.log('\n                             Quitting this window , forcibly shuts down the server');
