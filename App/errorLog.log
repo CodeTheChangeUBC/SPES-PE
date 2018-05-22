@@ -3,3 +3,9 @@
  
 2018-05-22 00:52:05.011 ERROR Error: NameError: name 'os' is not defined
  
+2018-05-22 14:30:12.062 ERROR Error:   File "scripts\script.py", line 974
+    websites["unsuccessful"].append("Bored In Vancouver")
+                                                        ^
+IndentationError: unindent does not match any outer indentation level
+
+ 
