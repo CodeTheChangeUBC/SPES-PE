@@ -38,7 +38,7 @@ def eventful(info,handleCount):
            endTime = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:]
            venue=info['event_venue']
            description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + "Age group: " + \
-           info['event_age_group']+ "\n" + "Organizer Contact Info: " + info['event_organizer_name'] + ", " + info['event_organizer_email'] + ", " + info['event_organizer_phone_number']
+           info['event_age_group']+ "\n" + "Organizer Contact Info: " + info['event_contact_name'] + ", " + info['event_organizer_email'] + ", " + info['event_contact_number']
            facebookURL = info['event_fbURL']
            price = info['event_price']
            link = info['event_url']
@@ -128,12 +128,12 @@ def youthCore(info,handleCount):
                 endTime = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:]
                 venue=info['event_venue']
                 details = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + \
-                          "\n" + "Organizer Contact #: " + info['event_organizer_phone_number']+ "\n" + "Event Website: " + info['event_url'] + "\n" + \
+                          "\n" + "Organizer Contact #: " + info['event_contact_number']+ "\n" + "Event Website: " + info['event_url'] + "\n" + \
                           "Ticket Purchasing Website: " + info['event_ticketURL']
                 facebookURL = info['event_fbURL']
                 cost = info['event_price']
                 ageGroup = info['event_age_group']
-                name = info['event_organizer_name']
+                name = info['event_contact_name']
                 email = info['event_organizer_email']        
 
                 myElem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'submitter_name')))
@@ -181,7 +181,7 @@ def planetFriendly(info,handleCount):
                 s = info['event_date_start'][:findnth(info['event_date_start']," ",2)]
                 s = s.replace(',', '')
                 startDay = str(datetime.strptime(s,'%B %d %Y').strftime('%A'))
-                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start']," ",0)+2]
+                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start'],",",0)]
                 startMonth=info['event_date_start'][:findnth(info['event_date_start']," ",0)]
                 if startMonth == "June" or startMonth == "July" or startMonth == "September":
                         startMonth = startMonth[:4]
@@ -193,9 +193,9 @@ def planetFriendly(info,handleCount):
                               "Age Group: " + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] + "\n" + \
                               "Ticket Purchasing: " + info['event_ticketURL'] 
                 city = info['event_city']
-                contactName = info['event_organizer_name']
+                contactName = info['event_contact_name']
                 contactEmail = info['event_organizer_email']
-                contactPhone = info['event_organizer_phone_number']
+                contactPhone = info['event_contact_number']
                 contactWeb = info['event_url']
                 contactWeb = contactWeb.replace('http://','')
 
@@ -263,7 +263,7 @@ def globalNews(info,handleCount):
                               "\n" + "Event Price: " + info['event_price'] 
                 age = info['event_age_group']
                 
-                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start']," ",0)+2]
+                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start'],",",0)]
                 startMonth=info['event_date_start'][:findnth(info['event_date_start']," ",0)]
                 startYear = info['event_date_start'][findnth(info['event_date_start']," ",1)+1:findnth(info['event_date_start']," ",1)+5]
 
@@ -272,7 +272,7 @@ def globalNews(info,handleCount):
                 startMinute = str(int(startMinute) - int(startMinute)%15)
                 startAM=info['event_date_start'][findnth(info['event_date_start'],":",0)+4:findnth(info['event_date_start'],":",0)+6]        
 
-                endDate = info['event_date_end'][findnth(info['event_date_end']," ",0)+1:findnth(info['event_date_end']," ",0)+2]
+                endDate = info['event_date_end'][findnth(info['event_date_end']," ",0)+1:findnth(info['event_date_end'],",",0)]
                 endMonth=info['event_date_end'][:findnth(info['event_date_end']," ",0)]
                 endYear = info['event_date_end'][findnth(info['event_date_end']," ",1)+1:findnth(info['event_date_end']," ",1)+5]
 
@@ -284,9 +284,9 @@ def globalNews(info,handleCount):
                 
                 city = info['event_city']
                 street = info['event_street']
-                organizerName = info['event_organizer_name']
+                organizerName = info['event_contact_name']
                 organizerEmail = info['event_organizer_email']
-                organizerPhone = info['event_organizer_phone_number']
+                organizerPhone = info['event_contact_number']
                 eventURL = info['event_url']
                 postalCode = info['event_postal_code']
                 ticketURL = info['event_ticketURL']
@@ -470,10 +470,9 @@ def metroVancouver(info,handleCount):
                               "Age Group: " + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + \
                               info['event_price'] + "\n" + "Ticket Purchasing: " + info['event_ticketURL'] 
                 address = info['event_street']
-                organizerName = info['event_organizer_name'][:findnth(info['event_organizer_name']," ",0)]
-                lastName = info['event_organizer_name'][findnth(info['event_date_start']," ",0):]
+                organizerName,lastName = info['event_contact_name'].split(" ")
                 email = info['event_organizer_email']
-                phone = info['event_organizer_phone_number']
+                phone = info['event_contact_number']
                 link = info['event_url']
 
                 s = info['event_date_start'][:findnth(info['event_date_start']," ",2)]
@@ -555,6 +554,7 @@ def metroVancouver(info,handleCount):
                 firstNameField.send_keys(organizerName)
 
                 lastNameField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_LastNameField_ctl00_ctl00_TextField")
+                lastNameField.clear()
                 lastNameField.send_keys(lastName)
 
                 phoneField = driver.find_element_by_id("ctl00_ctl35_g_b0b67dee_6d5f_4a70_bcef_95d39f0cc718_PhoneField_ctl00_ctl00_TextField")
@@ -582,12 +582,12 @@ def cnv(info,handleCount):
                                + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] + "\n" + \
                                "Ticket Purchasing: " + info['event_ticketURL'] 
                 location =info['event_venue']
-                name = info['event_organizer_name']
+                name = info['event_contact_name']
                 email = info['event_organizer_email']
-                phone = info['event_organizer_phone_number']
+                phone = info['event_contact_number']
                 url = info['event_url']
 
-                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start']," ",0)+2]
+                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start'],",",0)]
                 startMonth=info['event_date_start'][:findnth(info['event_date_start']," ",0)]
                 startYear = info['event_date_start'][findnth(info['event_date_start']," ",1)+1:findnth(info['event_date_start']," ",1)+5]
 
@@ -701,13 +701,30 @@ def ubyssey(info,handleCount):
                 description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + \
                               "Age Group: " + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] 
                 address = info['event_street']
-                host = info['event_organizer_name']
+                host = info['event_contact_name']
                 email = info['event_organizer_email']
-                phone = info['event_organizer_phone_number']
+                phone = info['event_contact_number']
                 ticket = info['event_ticketURL']
                 startTime = info['event_date_start']
                 endTime = info['event_date_end']
                 category = info['event_category3']
+
+                s = info['event_date_start'][:findnth(info['event_date_start']," ",2)]
+                s = s.replace(',', '')
+                date_obj = datetime.strptime(s, "%B %d %Y")
+                time = info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
+                time = str(datetime.strptime(time, '%I:%M %p'))
+                time = time[findnth(time," ",0)+1:findnth(time,":",1)]
+                startDate = str(datetime.strftime(date_obj, "%y-%m-%d")) + " " + time
+
+                s = info['event_date_end'][:findnth(info['event_date_end']," ",2)]
+                s = s.replace(',', '')
+                date_obj = datetime.strptime(s, "%B %d %Y")
+                time = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:]
+                time = str(datetime.strptime(time, '%I:%M %p'))
+                time = time[findnth(time," ",0)+1:findnth(time,":",1)]
+                endDate = str(datetime.strftime(date_obj, "%y-%m-%d")) + " " + time
+
 
                 myElem = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, 'id_title')))
                 titleField = driver.find_element_by_id("id_title")
@@ -725,13 +742,13 @@ def ubyssey(info,handleCount):
                 categoryField = Select(driver.find_element_by_id("id_category"))
                 categoryField.select_by_visible_text(category)
 
-##                startTimeField = driver.find_element_by_id("id_start_time")
-##                startTimeField.clear()
-##                startTimeField.send_keys(startTime)
-##
-##                endTimeField = driver.find_element_by_id("id_end_time")
-##                endTimeField.clear()
-##                endTimeField.send_keys(endTime)
+                startTimeField = driver.find_element_by_id("id_start_time")
+                startTimeField.clear()
+                startTimeField.send_keys(startDate)
+
+                endTimeField = driver.find_element_by_id("id_end_time")
+                endTimeField.clear()
+                endTimeField.send_keys(endDate)
 
                 locationField = driver.find_element_by_id("id_location")
                 locationField.clear()
@@ -769,14 +786,14 @@ def northShore(info,handleCount):
                 title = info['event_title']
                 description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group: " \
                                + info['event_age_group'] + "\n" + "Facebook Event: "+ info['event_fbURL'] + "\n" + "Ticket Purchasing: " + info['event_ticketURL']
-                name = info['event_organizer_name']
+                name = info['event_contact_name']
                 email = info['event_organizer_email']
-                phone = info['event_organizer_phone_number']
+                phone = info['event_contact_number']
                 price = info['event_price']
                 venue= info['event_venue']
                 webLink = info['event_url']
                 city=info['event_city']
-                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start']," ",0)+2]
+                startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start'],",",0)]
                 startMonth=info['event_date_start'][:findnth(info['event_date_start']," ",0)]
                 startYear = info['event_date_start'][findnth(info['event_date_start']," ",1)+1:findnth(info['event_date_start']," ",1)+5]
 
@@ -785,7 +802,7 @@ def northShore(info,handleCount):
                 startMinute = str(int(startMinute) - int(startMinute)%5)
                 startAM=info['event_date_start'][findnth(info['event_date_start'],":",0)+4:findnth(info['event_date_start'],":",0)+6]
 
-                endDate = info['event_date_end'][findnth(info['event_date_end']," ",0)+1:findnth(info['event_date_end']," ",0)+2]
+                endDate = info['event_date_end'][findnth(info['event_date_end']," ",0)+1:findnth(info['event_date_end'],",",0)]
                 endMonth=info['event_date_end'][:findnth(info['event_date_end']," ",0)]
                 endYear = info['event_date_end'][findnth(info['event_date_end']," ",1)+1:findnth(info['event_date_end']," ",1)+5]
 
@@ -879,10 +896,17 @@ def craigsList(info,handleCount):
                                "Price: " + info['event_price']
                 city = info['event_city']
                 street = info['event_street']
-                name = info['event_organizer_name']
+                name = info['event_contact_name']
                 email = info['event_organizer_email']
-                phone = info['event_organizer_phone_number']
+                phone = info['event_contact_number']
                 postalCode = info['event_postal_code']
+                s = info['event_date_start'][:findnth(info['event_date_start']," ",2)]
+                s = s.replace(',', '')
+                startDay = str(datetime.strptime(s,'%B %d %Y').strftime('%A'))
+                startDay = startDay[:3]
+                startDate = startDay + "," + info['event_date_start'][findnth(info['event_date_start']," ",0):findnth(info['event_date_start'],",",0)] + \
+                            " " + info['event_date_start'][:findnth(info['event_date_start']," ",0)] + \
+                            " " + info['event_date_start'][findnth(info['event_date_start']," ",1) +1:findnth(info['event_date_start']," ",1)+5]
 
                 myElem = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'PostingTitle')))
                 titleField = driver.find_element_by_id("PostingTitle")
@@ -892,6 +916,10 @@ def craigsList(info,handleCount):
                 postalCodeField = driver.find_element_by_id("postal_code")
                 postalCodeField.clear()
                 postalCodeField.send_keys(postalCode)
+
+                dateField = driver.find_element_by_id("eventStart_js")
+                dateField.clear()
+                dateField.send_keys(startDate)
 
                 descriptionField = driver.find_element_by_id("PostingBody")
                 descriptionField.clear()
@@ -941,8 +969,8 @@ def boredInVancouver(info,handleCount):
                 venue= info['event_venue'] + ", " + info['event_date_start']+ ", " +info['event_price']
                 description = info['event_details'] + "\n" + "Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group: " \
                                + info['event_age_group'] + "\n" + "Facebook Event: " +  info['event_fbURL'] + "\n" + "Ticket Purchasing: " + info['event_ticketURL'] + \
-                              "\n" + "Price: " + info['event_price']
-                name = info['event_organizer_name']
+                              "\n" + "Price: " + info['event_price'] + "\n" + "Contact Number: " + info['event_contact_number']
+                name = info['event_contact_name']
                 email = info['event_organizer_email']
                 url = info['event_url']
 
@@ -1016,7 +1044,7 @@ def main():
         sys.stdout.flush()
         print(json.dumps(websites))
         sys.stdout.flush()
-        quit()
+##        quit()
 
 
 
