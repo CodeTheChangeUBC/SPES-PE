@@ -129,7 +129,7 @@ function submitForm(formData){
 			data: formData,
 			url: 'http://localhost:8000/form', 
 			error:function(){
-				window.location.replace('../error.html');
+				unloadScreen();
 			},                     
 			success: function(data) {
 				unloadScreen();
