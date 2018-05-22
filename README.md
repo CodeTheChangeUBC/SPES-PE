@@ -11,7 +11,8 @@ Automatic Event Uploader for Stanley Park Ecology Society
 * [Chrome](https://www.google.com/chrome/)
 
 # How to start
-Double click on start.bat
+* (Windows) Double click on start.bat
+* (Mac/Linux) navigate inside the app folder , type node app.js in terminal and go to localhost:8000 on your browser
 
 # How to add more websites
 
