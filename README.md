@@ -12,3 +12,40 @@ Automatic Event Uploader for Stanley Park Ecology Society
 
 # How to start
 Double click on start.bat
+
+# How to add more websites
+
+### STEP 1: Add website name to the drop down menue on website
+  * Go to [views/landing.html](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/views/landing.html#L348-L372)
+  * Add the new website's name in an options tag 
+  ```html 
+<option value="funcName">New Website Name</option>
+  ```
+### STEP 2: Add new function to python script
+  * Go to [scripts/script.py](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/views/landing.html#L33)
+  * Define a new function in the following format
+  ```python 
+def funcName(info,handleCount):
+        try:
+           driver.execute_script('''window.open("http://website.com","_blank");''')
+           driver.switch_to.window(driver.window_handles[handleCount])
+           ## Scrape website here
+        except:
+            websites["unsuccessful"].append("Eventful")
+        else:
+            websites["successful"].append("Eventful")
+  ```
+  * Add the func to the [functions dictionary](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/views/landing.html#L94)
+  ```python
+          functions = {
+                "Eventful": eventful,
+                "Youth Core": youthCore,
+                "Planet Friendly":planetFriendly,
+                "Value of options field in html page" : funcName
+                }
+   ```
+ ### STEP 3 : Celebrate the addition of the new function :boom:
+ ##### Things to note , 
+ * Follow the exact function pattern provided
+ * Make sure that the function key in the function's dictionary matches the value in the options tag
+ 
