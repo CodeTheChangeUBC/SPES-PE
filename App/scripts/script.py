@@ -19,7 +19,6 @@ handleCount = 0
 username = "ctcstanley1@gmail.com"
 password = "codethechange"
 websites ={"successful":[],
-           "captcha":[],
            "unsuccessful":[]
           }
 
@@ -38,11 +37,12 @@ def eventful(info,handleCount):
            startTime=info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
            endTime = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:]
            venue=info['event_venue']
-           description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + "Age group:" + info['event_age_group']+"\n" + info['event_organizer_name'] + ", " + info['event_organizer_email'] + ", " + info['event_organizer_phone_number']
+           description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + "Age group: " + \
+           info['event_age_group']+ "\n" + "Organizer Contact Info: " + info['event_organizer_name'] + ", " + info['event_organizer_email'] + ", " + info['event_organizer_phone_number']
            facebookURL = info['event_fbURL']
            price = info['event_price']
            link = info['event_url']
-           category = info['event_category1']
+           category1 = info['event_category1'][0]
 
            driver.execute_script('''window.open("http://eventful.com/signin?goto=%2Fevents%2Fnew","_blank");''')
            driver.switch_to.window(driver.window_handles[handleCount])
@@ -78,13 +78,23 @@ def eventful(info,handleCount):
            venueField.clear()
            venueField.send_keys(venue)
 
-
            descriptionField = driver.find_element_by_id("inp-description")
            descriptionField.clear()
            descriptionField.send_keys(description)
 
            categoryField = Select(driver.find_element_by_id("inp-category1"))
-           categoryField.select_by_visible_text(category)
+           categoryField.select_by_visible_text(category1)
+
+
+           if len(info['event_category1']) > 1:
+                categoryField2 = Select(driver.find_element_by_id("inp-category2"))
+                categoryField2.select_by_visible_text(info['event_category1'][1])
+                if len(info['event_category1']) == 3:
+                    categoryField3 = Select(driver.find_element_by_id("inp-category3"))
+                    categoryField3.select_by_visible_text(info['event_category1'][2])
+
+
+               
            
            clickField = driver.find_element_by_id("click-more-options")
            clickField.click()
@@ -105,7 +115,7 @@ def eventful(info,handleCount):
         except:
             websites["unsuccessful"].append("Eventful")
         else:
-            websites["captcha"].append("Eventful")
+            websites["successful"].append("Eventful")
         
 
 def youthCore(info,handleCount):
@@ -117,8 +127,9 @@ def youthCore(info,handleCount):
                 startTime=info['event_date_start'][findnth(info['event_date_start']," ",2)+1:]
                 endTime = info['event_date_end'][findnth(info['event_date_end']," ",2)+1:]
                 venue=info['event_venue']
-                details = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + \
-                          "\n" + info['event_organizer_phone_number']+ "\n" + info['event_url'] + "\n" + info['event_ticketURL']
+                details = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_city'] + ", " + info['event_postal_code'] + "\n" + \
+                          "\n" + "Organizer Contact #: " + info['event_organizer_phone_number']+ "\n" + "Event Website: " + info['event_url'] + "\n" + \
+                          "Ticket Purchasing Website: " + info['event_ticketURL']
                 facebookURL = info['event_fbURL']
                 cost = info['event_price']
                 ageGroup = info['event_age_group']
@@ -158,7 +169,7 @@ def youthCore(info,handleCount):
         except:
                 websites["unsuccessful"].append("Youth Core")
         else:
-                websites["captcha"].append("Youth Core")
+                websites["successful"].append("Youth Core")
 
 
 def planetFriendly(info,handleCount):
@@ -178,9 +189,9 @@ def planetFriendly(info,handleCount):
                         startMonth = startMonth[:3]
                                         
                 startYear = info['event_date_start'][findnth(info['event_date_start']," ",1)+1:findnth(info['event_date_start']," ",1)+5]
-                print(startYear)
-                description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_postal_code'] + "\n" + \
-                              "Age Group: " + info['event_age_group'] + "\n" + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] + "\n" + info['event_ticketURL'] 
+                description = info['event_details'] + "\n" + "Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + \
+                              "Age Group: " + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] + "\n" + \
+                              "Ticket Purchasing: " + info['event_ticketURL'] 
                 city = info['event_city']
                 contactName = info['event_organizer_name']
                 contactEmail = info['event_organizer_email']
@@ -235,16 +246,10 @@ def planetFriendly(info,handleCount):
                 spamField = driver.find_element_by_name("Spam")
                 spam = "hello"
                 spamField.send_keys(spam)
-        except Exception as e:
-                print(e)
+        except:
                 websites['unsuccessful'].append("Planet Friendly")
         else:
-                try:
-                        driver.implicitly_wait(10)
-                        driver.find_element_by_name("ContactName")
-                        websites["unsuccessful"].append("Planet Friendly")
-                except NoSuchElementException:
-                        websites["successful"].append("Planet Friendly")
+                websites["successful"].append("Planet Friendly")
 
 
 def globalNews(info,handleCount):
@@ -254,7 +259,8 @@ def globalNews(info,handleCount):
 
                 title = info['event_title']
                 venue=info['event_venue']
-                description = info['event_details'] + "\n" + info['event_fbURL'] + "\n" + info['event_ticketURL'] + "\n" + "Price: " + info['event_price'] 
+                description = info['event_details'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Ticket Purchasing: "+ info['event_ticketURL'] + \
+                              "\n" + "Event Price: " + info['event_price'] 
                 age = info['event_age_group']
                 
                 startDate = info['event_date_start'][findnth(info['event_date_start']," ",0)+1:findnth(info['event_date_start']," ",0)+2]
@@ -385,12 +391,7 @@ def globalNews(info,handleCount):
         except:
                 websites["unsuccessful"].append("Global News")
         else:
-                try:
-                        driver.implicitly_wait(10)
-                        driver.find_element_by_id("event-organizer-name")
-                        websites["unsuccessful"].append("Global News")
-                except NoSuchElementException:
-                        websites["successful"].append("Planet Friendly")
+                websites["successful"].append("Global News")
 
 
 ##def kijiji(price,dateFrom,dateTo,title,description,postalCode,street,organizerPhone):
@@ -465,8 +466,9 @@ def metroVancouver(info,handleCount):
         try:
                 title = info['event_title']
                 location=info['event_venue']
-                description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_postal_code'] + "\n" + \
-                              "Age Group:" + info['event_age_group'] + "\n" + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] + "\n" + info['event_ticketURL'] 
+                description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + \
+                              "Age Group: " + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + \
+                              info['event_price'] + "\n" + "Ticket Purchasing: " + info['event_ticketURL'] 
                 address = info['event_street']
                 organizerName = info['event_organizer_name'][:findnth(info['event_organizer_name']," ",0)]
                 lastName = info['event_organizer_name'][findnth(info['event_date_start']," ",0):]
@@ -566,7 +568,7 @@ def metroVancouver(info,handleCount):
         except:
          websites["unsuccessful"].append("Metro Vancouver")
         else:
-         websites["captcha"].append("Metro Vancouver")
+         websites["successful"].append("Metro Vancouver")
 
         
 
@@ -576,8 +578,9 @@ def cnv(info,handleCount):
                 driver.switch_to.window(driver.window_handles[handleCount])
 
                 title = info['event_title']
-                description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group:" \
-                               + info['event_age_group'] + "\n" + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] + "\n" + info['event_ticketURL'] 
+                description = info['event_details'] + "\n" + "Event Address: " +  info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group: " \
+                               + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] + "\n" + \
+                               "Ticket Purchasing: " + info['event_ticketURL'] 
                 location =info['event_venue']
                 name = info['event_organizer_name']
                 email = info['event_organizer_email']
@@ -686,7 +689,7 @@ def cnv(info,handleCount):
         except:
                 websites["unsuccessful"].append("City of North Vancouver")
         else:
-                websites["captcha"].append("City of North Vancouver") 
+                websites["successful"].append("City of North Vancouver") 
 
 def ubyssey(info,handleCount):
         try:
@@ -695,8 +698,8 @@ def ubyssey(info,handleCount):
 
                 title = info['event_title']
                 location=info['event_venue']
-                description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_postal_code'] + "\n" + \
-                              "Age Group:" + info['event_age_group'] + "\n" + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] 
+                description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + \
+                              "Age Group: " + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Price: " + info['event_price'] 
                 address = info['event_street']
                 host = info['event_organizer_name']
                 email = info['event_organizer_email']
@@ -752,12 +755,7 @@ def ubyssey(info,handleCount):
         except:
                 websites["unsuccessful"].append("Ubyssey")
         else:
-                try:
-                        driver.implicitly_wait(10)
-                        driver.find_element_by_id("id_ticket_url")
-                        websites["unsuccessful"].append("Ubyssey")
-                except NoSuchElementException:
-                        websites["successful"].append("Ubyssey")
+                websites["successful"].append("Ubyssey")
 
 
 def northShore(info,handleCount):
@@ -765,15 +763,12 @@ def northShore(info,handleCount):
                 driver.execute_script('''window.open("http://www.nsnews.com/add-event","_blank");''')
                 driver.switch_to.window(driver.window_handles[handleCount])
 
-                time.sleep(10)
-                try:
-                    driver.switch_to.frame("trumbaSubmitEventForm")
-                except Exception as e:
-                    print(e)
+                time.sleep(15)
+                driver.switch_to.frame("trumbaSubmitEventForm")
 
                 title = info['event_title']
-                description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group:" \
-                               + info['event_age_group'] + "\n" + info['event_fbURL'] + "\n" + info['event_ticketURL']
+                description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group: " \
+                               + info['event_age_group'] + "\n" + "Facebook Event: "+ info['event_fbURL'] + "\n" + "Ticket Purchasing: " + info['event_ticketURL']
                 name = info['event_organizer_name']
                 email = info['event_organizer_email']
                 phone = info['event_organizer_phone_number']
@@ -865,16 +860,10 @@ def northShore(info,handleCount):
                 descriptionField = driver.find_element_by_id("eaa_custom4_0")
                 descriptionField.clear()
                 descriptionField.send_keys(description)
-        except Exception as e:
-              print(e)
+        except:
               websites["unsuccessful"].append("North Shore")
         else:
-                try:
-                        driver.implicitly_wait(10)
-                        driver.find_element_by_id("eaa_custom6_0")
-                        websites["unsuccessful"].append("North Shore")
-                except:
-                        websites["successful"].append("North Shore")
+              websites["successful"].append("North Shore")
 
         
 
@@ -885,8 +874,9 @@ def craigsList(info,handleCount):
 
                 title = info['event_title']
                 venue=info['event_venue']
-                description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group:" \
-                               + info['event_age_group'] + "\n" + info['event_fbURL'] + "\n" + info['event_ticketURL'] + "\n" + info['event_price']
+                description = info['event_details'] + "\n" + "Event Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group: " \
+                               + info['event_age_group'] + "\n" + "Facebook Event: " + info['event_fbURL'] + "\n" + "Ticket Purchasing: " +  info['event_ticketURL'] + "\n" + \
+                               "Price: " + info['event_price']
                 city = info['event_city']
                 street = info['event_street']
                 name = info['event_organizer_name']
@@ -940,12 +930,7 @@ def craigsList(info,handleCount):
             except:
              websites["unsuccessful"].append("Craigslist")
             else:
-                try:
-                        driver.implicitly_wait(10)
-                        driver.find_element_by_id("xstreet0")
-                        websites["unsuccessful"].append("Craigslist")
-                except NoSuchElementException:
-                        websites["successful"].append("Craigslist")
+             websites["successful"].append("Craigslist")
 
 def boredInVancouver(info,handleCount):
         try:
@@ -954,8 +939,9 @@ def boredInVancouver(info,handleCount):
                 
                 title = info['event_title']
                 venue= info['event_venue'] + ", " + info['event_date_start']+ ", " +info['event_price']
-                description = info['event_details'] + "\n" + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group:" \
-                               + info['event_age_group'] + "\n" + info['event_fbURL'] + "\n" + info['event_ticketURL'] + "\n" + "Price" + info['event_price']
+                description = info['event_details'] + "\n" + "Address: " + info['event_street'] + ", " + info['event_postal_code'] + "\n" + "Age Group: " \
+                               + info['event_age_group'] + "\n" + "Facebook Event: " +  info['event_fbURL'] + "\n" + "Ticket Purchasing: " + info['event_ticketURL'] + \
+                              "\n" + "Price: " + info['event_price']
                 name = info['event_organizer_name']
                 email = info['event_organizer_email']
                 url = info['event_url']
@@ -987,12 +973,7 @@ def boredInVancouver(info,handleCount):
         except:
              websites["unsuccessful"].append("Bored In Vancouver")
         else:
-                try:
-                        driver.implicitly_wait(10)
-                        driver.find_element_by_id("g32-yourname")
-                        websites["unsuccessful"].append("Bored In Vancouver")
-                except NoSuchElementException:
-                        websites["successful"].append("Bored In Vancouver")
+             websites["successful"].append("Bored In Vancouver")
         
         
 def main():
@@ -1003,7 +984,6 @@ def main():
         global handleCount
         
         input = sys.argv[1]
-        #input='{"event_contact_name":"1","event_contact_number":"1111111111","event_organizer_name":"1","event_organizer_email":"1@1","event_organizer_phone_number":"1111111111","event_title":"1","event_date_start":"June 6, 2018 6:25 AM","event_date_end":"September 27, 2018 6:55 PM","event_url":"1","event_fbURL":"1","event_age_group":"1","event_price":"1","event_ticketURL":"1","event_details":"1","event_venue":"1","event_street":"1","event_city":"1","event_postal_code":"1","event_websites":["Eventful","Youth Core", "Global News"]}'
         info = json.loads(input)
 
 ##        f = open('C:/Users/Nadeem AbdelAziz/Desktop/Extracurriculars/sample.json', "r")
@@ -1018,7 +998,7 @@ def main():
                 "Global News": globalNews,
 ##                "Kijiji": kijiji,
                 "Metro Vancouver": metroVancouver,
-                "Community of North Vancouver": cnv,
+                "City of North Van Community": cnv,
                 "Ubyssey": ubyssey,
                 "North Shore": northShore,
                 "Craigslist": craigsList,
@@ -1029,7 +1009,7 @@ def main():
             try:
                 handleCount+=1
                 functions[website](info,handleCount)
-            except Exception as e:
+            except:
                 pass
 
 
