@@ -43,7 +43,7 @@ app.post('/form', function(req, res) {
 	var pyshell = new PythonShell('scripts/script.py',options);
 
 	pyshell.on('message', function (message) {
-		console.log('messege: '+message);
+		//console.log('messege: '+ message);
 		res.send(message);
 	});
 

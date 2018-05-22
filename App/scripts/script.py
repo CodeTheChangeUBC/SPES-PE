@@ -394,74 +394,6 @@ def globalNews(info,handleCount):
                 websites["successful"].append("Global News")
 
 
-##def kijiji(price,dateFrom,dateTo,title,description,postalCode,street,organizerPhone):
-####        driver.execute_script("window.open('https://www.kijiji.ca/t-login.html?targetUrl=L3Atc2VsZWN0LWNhdGVnb3J5Lmh0bWw/Y2F0ZWdvcnlJZD0yODkmdXNlclJlZ2lzdGVyZWQ9dHJ1ZV54Tk1KeU9ySTA5U0Z3MDdzS213OC93PT0',
-####                              'new window')")
-##
-##        try: 
-##                usernameField = driver.find_element_by_id("LoginEmailOrNickname")
-##        except NoSuchElementException:
-##                print('Username field ID changed')
-##                
-##        usernameField.send_keys(username)
-##
-##        try:
-##                passwordField = driver.find_element_by_id("login-password")
-##        except NoSuchElementException:
-##               print('Password field ID changed')
-##
-##        passwordField.send_keys(password)
-##        passwordField.submit()
-##
-##        try:
-##            myElem = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'FormLocationPicker')))
-##        except TimeoutException:
-##            print ("Loading took too much time!")
-##
-##        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "British Columbia")))
-##        element.click()
-##        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Greater Vancouver Area")))
-##        element.click()
-##        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Vancouver")))
-##        element.click()
-##
-##        form = driver.find_element_by_id("PageSelect")
-##        form.click()
-##        try: 
-##                priceField = driver.find_element_by_id("PriceAmount")
-##                priceField.send_keys(price)
-##
-##                dateField = driver.find_element_by_id("SelectDate")
-##                dateField.send_keys(dateFrom)
-##                
-##                dateToField = driver.find_element_by_id("SelectDateTo")
-##                dateToField.send_keys(dateTo)
-##
-##                titleField = driver.find_element_by_id("postad-title")
-##                titleField.send_keys(title)
-##
-##                descriptionField = driver.find_element_by_id("pstad-descrptn")
-##                descriptionField.send_keys(description)
-##
-##                postalCodeField = driver.find_element_by_id("PostalCode")
-##                postalCodeField.send_keys(postalCode)
-##
-##                streetField = driver.find_element_by_id("pstad-map-address")
-##                streetField.send_keys(street)
-##
-##                numberField = driver.find_element_by_id("PhoneNumber")
-##                numberField.send_keys(organizerPhone)
-##        except:
-##                websites['unsuccessful'].append("Kijiji")
-##        else:
-##                try:
-##                        driver.implicitly_wait(10)
-##                        driver.find_element_by_id("SelectDate")
-##                        websites['unsuccessful'].append("Kijiji")
-##                except NoSuchElementException:
-##                        websites['successful'].append("Kijiji")
-
-
 def metroVancouver(info,handleCount):
         try:
                 title = info['event_title']
@@ -1014,17 +946,12 @@ def main():
         input = sys.argv[1]
         info = json.loads(input)
 
-##        f = open('C:/Users/Nadeem AbdelAziz/Desktop/Extracurriculars/sample.json', "r")
-##        s = f.read()
-##        info = json.loads(s)
-
 
         functions = {
                 "Eventful": eventful,
                 "Youth Core": youthCore,
                 "Planet Friendly":planetFriendly,
                 "Global News": globalNews,
-##                "Kijiji": kijiji,
                 "Metro Vancouver": metroVancouver,
                 "City of North Van Community": cnv,
                 "Ubyssey": ubyssey,
@@ -1041,10 +968,8 @@ def main():
                 pass
 
 
-        sys.stdout.flush()
         print(json.dumps(websites))
         sys.stdout.flush()
-##        quit()
 
 
 
