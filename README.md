@@ -31,9 +31,9 @@ def funcName(info,handleCount):
            driver.switch_to.window(driver.window_handles[handleCount])
            ## Scrape website here
         except:
-            websites["unsuccessful"].append("Eventful")
+            websites["unsuccessful"].append("Website Name")
         else:
-            websites["successful"].append("Eventful")
+            websites["successful"].append("Website Name")
   ```
   * Add the func to the [functions dictionary](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/views/landing.html#L94)
   ```python
