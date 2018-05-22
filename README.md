@@ -23,7 +23,7 @@ Automatic Event Uploader for Stanley Park Ecology Society
 <option value="funcName">New Website Name</option>
   ```
 ### STEP 2: Add new function to python script
-  * Go to [scripts/script.py](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/views/landing.html#L33)
+  * Go to [scripts/script.py](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/scripts/script.py#L33)
   * Define a new function in the following format
   ```python 
 def funcName(info,handleCount):
@@ -36,7 +36,7 @@ def funcName(info,handleCount):
         else:
             websites["successful"].append("Website Name")
   ```
-  * Add the func to the [functions dictionary](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/views/landing.html#L94)
+  * Add the func to the [functions dictionary](https://github.com/CodeTheChangeUBC/SPES-PE/blob/master/App/scripts/script.py#L94)
   ```python
           functions = {
                 "Eventful": eventful,
